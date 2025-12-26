@@ -360,7 +360,7 @@ Func AutoAscend()
 		;Click ascension tab
 		MouseClick("left", 93, 680, 1, 0)
 		Sleep(400)
-		PixelSearch(260, 600, 260, 600, 0x58188D)
+		PixelSearch(260, 480, 260, 480, 0x58188D)
 		If Not @error Then
 			MouseClick("left", 260, 600, 1, 0)
 			Sleep(300)

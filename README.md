@@ -63,11 +63,11 @@ You have two options:
 
     - Ascension Upgrade ***Leadership Master*** is needed for claiming minions otherwise it will not claim them.
   
-    - Use Anna or Roy for Ascending Heights
+    - Use Anna Default-Skin for Ascending Heights
 
     ### For Bossfights only:
 
-   -  Use Anna or Roy.
+   -  Use Anna Default-Skin.
 
    - Use Bat Long bow or a Multishot Bow.
 

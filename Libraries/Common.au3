@@ -42,7 +42,7 @@ EndFunc   ;==>FindPixelUntilFound
 
 Func Slider()
 	;Top left
-	PixelSearch(443, 560, 443, 560, 0x007E00)
+	PixelSearch(441, 560, 443, 560, 0x007E00)
 	If Not @error Then
 		MouseMove(840, 560, 0)
 		MouseClickDrag("left", 840, 560, 450, 560)
@@ -50,7 +50,7 @@ Func Slider()
 	EndIf
 
 	;Bottom left
-	PixelSearch(443, 620, 443, 620, 0x007E00)
+	PixelSearch(441, 620, 443, 620, 0x007E00)
 	If Not @error Then
 		MouseMove(840, 620, 0)
 		MouseClickDrag("left", 840, 620, 450, 620)
@@ -58,7 +58,7 @@ Func Slider()
 	EndIf
 
 	;Top right
-	PixelSearch(850, 560, 850, 560, 0x007E00)
+	PixelSearch(847, 560, 850, 560, 0x007E00)
 	If Not @error Then
 		MouseMove(450, 560, 0)
 		MouseClickDrag("left", 450, 560, 840, 560)
@@ -66,7 +66,7 @@ Func Slider()
 	EndIf
 
 	;Bottom right
-	PixelSearch(850, 620, 850, 620, 0x007E00)
+	PixelSearch(847, 620, 850, 620, 0x007E00)
 	If Not @error Then
 		MouseMove(450, 620, 0)
 		MouseClickDrag("left", 450, 620, 840, 620)

@@ -3,6 +3,7 @@
 
 Func BossFightKnight()
 	WriteInLogs("Start of BossFight Knight")
+	Return
 	Do
 		Slider()
 		Sleep(500)
