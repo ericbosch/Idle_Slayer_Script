@@ -4,7 +4,7 @@
 Func BonusStage($bSkipBonusStageState)
 	WriteInLogs("Start of BonusStage")
 	Sleep(200)
-	PixelSearch(200, 505, 200, 505, 0x111014)
+	PixelSearch(160, 498, 200, 498, 0x16171F)
 	If Not @error Then
 		$bBonusStage3 = True
 	Else
@@ -111,7 +111,7 @@ EndFunc   ;==>BonusStage3Fail
 Func BonusStage2SB()
 	WriteInLogs("BonusStage2SB")
 	; Section 1 sync
-	FindPixelUntilFound(220, 465, 220, 465, 0xA0938E)
+	FindPixelUntilFound(220, 465, 220, 465, 0xCFBCB8)
 	Sleep(200)
 	;Section 1 start
 	cSend(94, 1640) ;1
@@ -139,7 +139,7 @@ Func BonusStage2SB()
 	EndIf
 	WriteInLogs("BonusStage2SB Section 1 Complete")
 	; Section 2 sync
-	FindPixelUntilFound(780, 536, 780, 536, 0xBB26DF)
+	FindPixelUntilFound(780, 513, 780, 513, 0xBB26DF)
 	; Section 2 start
 	cSend(156, 719) ;1
 	cSend(47, 687) ;2
@@ -178,7 +178,7 @@ Func BonusStage2SB()
 	EndIf
 	WriteInLogs("BonusStage2SB Section 2 Complete")
 	;Stage 3 sync
-	FindPixelUntilFound(220, 465, 220, 465, 0xA0938E)
+	FindPixelUntilFound(151, 465, 220, 465, 0xCFBCB8)
 	; Section 3 Start
 	cSend(109, 1203) ;1
 	cSend(31, 641) ;2
@@ -254,7 +254,7 @@ EndFunc   ;==>BonusStage2SB
 Func BonusStage2()
 	WriteInLogs("BonusStage2")
 	; Section 1 sync
-	FindPixelUntilFound(220, 465, 220, 465, 0xA0938E)
+	FindPixelUntilFound(220, 465, 220, 465, 0xCFBCB8)
 	Sleep(200)
 	;Section 1 start
 	cSend(94, 1640) ;1
@@ -284,7 +284,7 @@ Func BonusStage2()
 	EndIf
 	WriteInLogs("BonusStage2 Section 1 Complete")
 	; Section 2 sync
-	FindPixelUntilFound(780, 536, 780, 536, 0xBB26DF)
+	FindPixelUntilFound(780, 513, 780, 513, 0xBB26DF)
 	; Section 2 start
 	cSend(156, 719) ;1
 	cSend(47, 687) ;2
@@ -323,7 +323,7 @@ Func BonusStage2()
 	EndIf
 	WriteInLogs("BonusStage2 Section 2 Complete")
 	;Stage 3 sync
-	FindPixelUntilFound(220, 465, 220, 465, 0xA0938E)
+	FindPixelUntilFound(151, 465, 220, 465, 0xCFBCB8)
 	; Section 3 Start
 	cSend(109, 1203) ;1
 	cSend(31, 641) ;2
