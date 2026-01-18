@@ -21,6 +21,7 @@ Func Chesthunt($bNoLockpickingState, $bPerfectChestHuntState, $bNoReinforcedCrys
 		For $iX = 1 To 10
 			PixelSearch($iPixelX, $iPixelY - 1, $iPixelX + 5, $iPixelY, 0xFFEB04)
 			If Not @error Then
+				WriteInLogs("Saver Found")
 				$iSaverX = $iPixelX
 				$iSaverY = $iPixelY
 				ExitLoop (2)
@@ -83,12 +84,17 @@ Func ProcessChestGrid($iSaverX, $iSaverY, $bNoLockpickingState, $bPerfectChestHu
 			EndIf
 
 			Local $iChestResult = OpenChest($iPixelX, $iPixelY, $bNoLockpickingState)
+			WriteInLogs("Chest result: ")
+			WriteInLogs($iChestResult)
 
 			If $iChestResult == $eChestHuntEnd Then
+				WriteInLogs("Chest hunt ended, finishing....")
 				Return
-			EndIf
+			EndIF
 
 			$iCurrentState = GetUpdatedState($iCount, $iCurrentState, $iChestResult, $bPerfectChestHuntState, $bNoReinforcedCrystalSaverState)
+			WriteInLogs("Current state: ")
+			WriteInLogs($iCurrentState)
 
 			If $iCurrentState == $eStateOpenLifeSaver Then
 				$iCurrentState = OpenLifeSaver($iSaverX, $iSaverY, $bNoLockpickingState)
