@@ -397,7 +397,7 @@ Func EventTabFocus()
 EndFunc   ;==>EventTabFocus
 
 Func EventButtonGithubClick()
-	ShellExecute("https://github.com/Devil4ngle/Idle_Slayer_Script/releases")
+	ShellExecute("https://github.com/ericbosch/Idle_Slayer_Script/releases")
 EndFunc   ;==>EventButtonGithubClick
 
 Func EventButtonInstructionsClick()
@@ -572,7 +572,7 @@ Func LoadSettings()
 EndFunc   ;==>LoadSettings
 
 Func EventButtonUpdateClick()
-	Local $dData = InetRead("https://api.github.com/repos/Devil4ngle/Idle_Slayer_Script/releases/latest", 1)
+	Local $dData = InetRead("https://api.github.com/repos/ericbosch/Idle_Slayer_Script/releases/latest", 1)
 	$sJsonData = BinaryToString($dData)
 	If @error Then
 		MsgBox($MB_OK, "Error", "Failed to retrieve release information.")
@@ -587,7 +587,7 @@ Func EventButtonUpdateClick()
 	Else
 		$iRes = MsgBox($MB_OKCANCEL, "Update Available", "Go on Github and Download.")
 		If $iRes == $IDOK Then
-			ShellExecute("https://github.com/Devil4ngle/Idle_Slayer_Script/releases")
+			ShellExecute("https://github.com/ericbosch/Idle_Slayer_Script/releases")
 		EndIf
 	EndIf
 EndFunc   ;==>EventButtonUpdateClick

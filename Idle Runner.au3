@@ -1,8 +1,8 @@
 #NoTrayIcon
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=Resources\Icon.ico
-#AutoIt3Wrapper_Outfile=Idle_Runner_x86.exe
-#AutoIt3Wrapper_Outfile_x64=Idle_Runner_x64.exe
+#AutoIt3Wrapper_Outfile=Idle.Runner_x32.exe
+#AutoIt3Wrapper_Outfile_x64=Idle.Runner_x64.exe
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Compile_Both=y
 #AutoIt3Wrapper_UseX64=y
