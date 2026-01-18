@@ -3,12 +3,13 @@
 
 Func BossFightKnight()
 	WriteInLogs("Start of BossFight Knight")
-	Return
+	WriteInLogs("Do Slider")
 	Do
 		Slider()
 		Sleep(500)
 		PixelSearch(653, 222, 653, 222, 0xFFF38F)
 	Until @error
+	WriteInLogs("Slider done")
 	BossBattleKnight()
 EndFunc   ;==>BossFightKnight
 
@@ -25,17 +26,20 @@ Func BossBattleKnight()
 			$aPos = PixelSearch(900, 150, 900, 343, 0x2C2C2C)
 			If Not @error Then
 				$hAttackTimer = TimerInit()
+				WriteInLogs("RangeAttackKnight")
 				RangeAttackKnight($aPos)
 			EndIf
 			$aPos = PixelSearch(445, 210, 445, 387, 0xAF9967)
 			If Not @error Then
 				$hAttackTimer = TimerInit()
+				WriteInLogs("CloseAttackKnight")
 				CloseAttackKnight($aPos)
 			EndIf
 
 			$aPos = PixelSearch(445, 210, 445, 387, 0xD7CCB3)
 			If Not @error Then
 				$hAttackTimer = TimerInit()
+				WriteInLogs("CloseAttackKnight 2")
 				CloseAttackKnight($aPos)
 			EndIf
 		EndIf
@@ -43,16 +47,18 @@ Func BossBattleKnight()
 		If $iTimer < TimerDiff($hTime) Then
 
 			If $bFirstStage == True Then
-				PixelSearch(267, 130, 272, 130, 0xF5B784)
+				PixelSearch(260, 130, 272, 130, 0xF5B784)
 				If Not @error Then
 					;ConsoleWrite(' Dialog ')
+					WriteInLogs("Dialog")
 					WriteInLogs("Knight Stage 2")
 					Do
 						Sleep(100)
 						MouseClick("left", 1020, 420, 1, 0)
-						PixelSearch(272, 130, 272, 130, 0xF5B784)
+						PixelSearch(260, 130, 272, 130, 0xF5B784)
 					Until @error
 					ControlFocus("Idle Slayer", "", "")
+					WriteInLogs("Dialog done")
 					$bFirstStage = False
 					$bDashAttack = True
 				EndIf
@@ -78,7 +84,7 @@ Func BossBattleKnight()
 			EndIf
 
 			If 200000 < TimerDiff($hTimeEndBoss) Then
-				WriteInLogs("Knight Lost")
+				WriteInLogs("Knight Lost 2")
 				ExitLoop 1
 			EndIf
 
@@ -136,6 +142,7 @@ Func RangeAttackKnight($aPos)
 EndFunc   ;==>RangeAttackKnight
 
 Func DownAttackKnight()
+	WriteInLogs("DownAttackKnight")
 	;ConsoleWrite(' DownAttack ')
 	ControlSend("Idle Slayer", "", "", "{Up down}")
 	Sleep(170)
@@ -143,11 +150,13 @@ Func DownAttackKnight()
 EndFunc   ;==>DownAttackKnight
 
 Func UpperAttackKnight()
+	WriteInLogs("UpperAttackKnight")
 	;ConsoleWrite(' UpperAttack ')
 	Sleep(730)
 EndFunc   ;==>UpperAttackKnight
 
 Func ShootKnight()
+	WriteInLogs("ShootKnight")
 	Sleep(200)
 	ControlSend("Idle Slayer", "", "", "{Up down}")
 	Sleep(300)
