@@ -33,8 +33,8 @@ Global $bAutoBuyUpgradeState = False, _
 		$bArmoryExcellentState = False, _
 		$bRestartGameState = False
 
-Global $sVersion = "3.5.5"
-Global $iJumpSliderValue = 0, _
+Global $sVersion = "3.5.6"
+Global $iJumpSliderValue = 150, _
 		$iCirclePortalsCount = 7, _
 		$iAutoAscendTimer = 10, _
 		$iAutoBuyTimer = 10, _
