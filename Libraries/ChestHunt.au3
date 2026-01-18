@@ -90,7 +90,7 @@ Func ProcessChestGrid($iSaverX, $iSaverY, $bNoLockpickingState, $bPerfectChestHu
 			If $iChestResult == $eChestHuntEnd Then
 				WriteInLogs("Chest hunt ended, finishing....")
 				Return
-			EndIf
+			EndIF
 
 			$iCurrentState = GetUpdatedState($iCount, $iCurrentState, $iChestResult, $bPerfectChestHuntState, $bNoReinforcedCrystalSaverState)
 			WriteInLogs("Current state: ")
