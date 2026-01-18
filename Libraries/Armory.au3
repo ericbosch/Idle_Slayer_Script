@@ -173,5 +173,8 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
         
     Next
 	WriteInLogs("SellArmory Finish")
+	;Scroll TOP
+	MouseWheel("up", 50)
+	Sleep(500)
 	MouseClick("left", 467, 698, 1, 0)
 EndFunc   ;==>SellArmory

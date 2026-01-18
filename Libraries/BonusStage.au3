@@ -4,7 +4,7 @@
 Func BonusStage($bSkipBonusStageState)
 	WriteInLogs("Start of BonusStage")
 	Sleep(200)
-	PixelSearch(200, 505, 200, 505, 0x111014)
+	PixelSearch(200, 505, 200, 505, 0x121316)
 	If Not @error Then
 		$bBonusStage3 = True
 	Else

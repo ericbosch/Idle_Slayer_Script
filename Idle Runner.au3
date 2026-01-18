@@ -1,8 +1,8 @@
 #NoTrayIcon
 #Region ;**** Directives created by AutoIt3Wrapper_GUI ****
 #AutoIt3Wrapper_Icon=Resources\Icon.ico
-#AutoIt3Wrapper_Outfile=Idle Runner_x32.exe
-#AutoIt3Wrapper_Outfile_x64=Idle Runner_x64.exe
+#AutoIt3Wrapper_Outfile=Idle_Runner_x86.exe
+#AutoIt3Wrapper_Outfile_x64=Idle_Runner_x64.exe
 #AutoIt3Wrapper_Compression=0
 #AutoIt3Wrapper_Compile_Both=y
 #AutoIt3Wrapper_UseX64=y
@@ -140,7 +140,7 @@ Func Main()
 		
 
 		; Silver box collect
-		PixelSearch(650, 36, 650, 36, 0xCA9700)
+		PixelSearch(650, 36, 650, 36, 0xB88A00)
 		If Not @error Then
 			WriteInLogs("Silver Box Collected")
 			MouseClick("left", 644, 49, 1, 0)
@@ -481,7 +481,7 @@ Func CirclePortals()
 				$sColor = 0x00CBF8
 			Case 2
 				;hot desert
-				$sColor = 0xBD4348
+				$sColor = 0xC5464B
 			Case 3
 				;jungle
 				$sColor = 0x009D93

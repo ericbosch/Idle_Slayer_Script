@@ -21,6 +21,7 @@ Func Chesthunt($bNoLockpickingState, $bPerfectChestHuntState, $bNoReinforcedCrys
 		For $iX = 1 To 10
 			PixelSearch($iPixelX, $iPixelY - 1, $iPixelX + 5, $iPixelY, 0xFFEB04)
 			If Not @error Then
+				WriteInLogs("Saver Found")
 				$iSaverX = $iPixelX
 				$iSaverY = $iPixelY
 				ExitLoop (2)
@@ -83,14 +84,20 @@ Func ProcessChestGrid($iSaverX, $iSaverY, $bNoLockpickingState, $bPerfectChestHu
 			EndIf
 
 			Local $iChestResult = OpenChest($iPixelX, $iPixelY, $bNoLockpickingState)
+			WriteInLogs("Chest result: ")
+			WriteInLogs($iChestResult)
 
 			If $iChestResult == $eChestHuntEnd Then
+				WriteInLogs("Chest hunt ended, finishing....")
 				Return
 			EndIF
 
 			$iCurrentState = GetUpdatedState($iCount, $iCurrentState, $iChestResult, $bPerfectChestHuntState, $bNoReinforcedCrystalSaverState)
+			WriteInLogs("Current state: ")
+			WriteInLogs($iCurrentState)
 
 			if $iCurrentState == $eStateOpenLifeSaver Then
+				WriteInLogs("Open life saver")
 				$iCurrentState = OpenLifeSaver($iSaverX, $iSaverY, $bNoLockpickingState)
 			EndIf
 
@@ -186,7 +193,7 @@ Func OpenLifeSaver($iSaverX, $iSaverY, $bNoLockpickingState)
     If $bNoLockpickingState Then
         Sleep(1500)
     Else
-        Sleep(550)
+        Sleep(800)
     EndIf
     Return $eLifeSaverChest
 EndFunc   ;==>OpenLifeSaver
@@ -194,21 +201,25 @@ EndFunc   ;==>OpenLifeSaver
 
 Func OpenChest($iPixelX, $iPixelY, $bNoLockpickingState)
     ; Open chest
+	WriteInLogs("Open chest")
     MouseClick("left", $iPixelX + 33, $iPixelY - 23, 1, 0)
     If $bNoLockpickingState Then
         Sleep(1500)
     Else
-        Sleep(550)
+        Sleep(800)
     EndIf
     ; Check if chest hunt ended
-	PixelSearch(550, 694, 550, 694, 0xAF0000)
+	WriteInLogs("Check if chest hunt ended")
+    PixelSearch(550, 694, 550, 694, 0xAF0000)
     If Not @error Then
+		WriteInLogs("Chest hunt ended")
         Return $eChestHuntEnd
     EndIf
 
     ; if 2 x wait some more
     PixelSearch(500, 210, 500, 210, 0x00FF00)
     If Not @error Then
+		WriteInLogs("X2 chest")
         Sleep(1000)
         Return $e2xChest
     EndIf
@@ -216,14 +227,11 @@ Func OpenChest($iPixelX, $iPixelY, $bNoLockpickingState)
     ; if mimic wait some more
     PixelSearch(434, 211, 434, 211, 0xFF0000)
     If Not @error Then
-        If $bNoLockpickingState Then
-            Sleep(2500)
-        Else
-            Sleep(1500)
-        EndIf
-
+		Sleep(2500)
+		WriteInLogs("Mimic found")
         Return $eMimicChest
     EndIf
-
+	
+	WriteInLogs("Normal chest")
     Return $eRewardChest
 EndFunc   ;==>OpenChest

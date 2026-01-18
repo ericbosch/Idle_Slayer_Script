@@ -62,7 +62,7 @@ Func AscendingHeightsPlay()
 			EndIf
 		EndIf
 
-		$aPosPlayer = PixelSearch(375, 260, 900, 730, 0x633E75)
+		$aPosPlayer = PixelSearch(375, 260, 900, 730, 0xECF3FF)
 		If @error Then ContinueLoop
 
 		$aPosPlatform = searchAllPlatformBellowPlayer($aPosPlayer[0], $aPosPlayer[1], $bSame)
