@@ -6,7 +6,7 @@ Func BossFightVictor()
 	Do
 		Slider()
 		Sleep(500)
-		PixelSearch(653, 222, 653, 222, 0xFFF38F)
+		PixelSearch(653, 222, 653, 222, 0xFFF38F, 1)
 	Until @error
 	BossBattleVictor()
 EndFunc   ;==>BossFightVictor
@@ -19,13 +19,13 @@ Func BossBattleVictor()
 	Local $aPos, $iTimer = 2000, $hTime = TimerInit(), $hTimeEndBoss = TimerInit()
 	While 1
 		If $bFirstStage == False Then
-			PixelSearch(1072, 150, 1072, 488, 0xFFFFFF)
+			PixelSearch(1072, 150, 1072, 488, 0xFFFFFF, 1)
 			If Not @error Then
 				;Send("!{PRINTSCREEN}")
 				FlameAttackVictor()
 			EndIf
 		EndIf
-		$aPos = PixelSearch(919, 292, 919, 452, 0xFFFFFF)
+		$aPos = PixelSearch(919, 292, 919, 452, 0xFFFFFF, 1)
 		If Not @error Then
 			AdlibUnRegister("Shoot")
 			NormalAttackVictor($aPos)
@@ -33,7 +33,7 @@ Func BossBattleVictor()
 
 		If $iTimer < TimerDiff($hTime) Then
 			;Close Boss Fight
-			PixelSearch(835, 477, 835, 477, 0xFD3169)
+			PixelSearch(835, 477, 835, 477, 0xFD3169, 1)
 			If Not @error Then
 				AdlibUnRegister("Shoot")
 				Sleep(500)
@@ -42,7 +42,7 @@ Func BossBattleVictor()
 				ExitLoop 1
 			EndIf
 			If $bFirstStage == True Then
-				PixelSearch(272, 130, 272, 130, 0xAE6C37)
+				PixelSearch(272, 130, 272, 130, 0xAE6C37, 1)
 				If Not @error Then
 					;ConsoleWrite(' Dialog ')
 					$bFirstStage = False
@@ -51,7 +51,7 @@ Func BossBattleVictor()
 					AdlibRegister("Shoot", 50)
 					Do
 						Sleep(50)
-						PixelSearch(272, 130, 272, 130, 0xAE6C37)
+						PixelSearch(272, 130, 272, 130, 0xAE6C37, 1)
 					Until @error
 					Sleep(4000)
 					AdlibUnRegister("Shoot")

@@ -127,14 +127,14 @@ Func Main()
 		EndIf
 
 		; Silver box collect
-		PixelSearch(650, 36, 650, 36, 0xCA9700)
+		PixelSearch(650, 36, 650, 36, 0xCA9700, 1)
 		If Not @error Then
 			WriteInLogs("Silver Box Collected")
 			MouseClick("left", 644, 49, 1, 0)
 		EndIf
 
 		; Rage when Megahorde
-		PixelSearch(385, 280, 385, 280, 0x140C1C)
+		PixelSearch(385, 280, 385, 280, 0x140C1C, 1)
 		If Not @error Then
 			SyncProcess(False)
 			RageWhenHorde()
@@ -142,7 +142,7 @@ Func Main()
 		EndIf
 
 		; Claim quests
-		PixelSearch(1130, 610, 1130, 610, 0xCBCB4C)
+		PixelSearch(1130, 610, 1130, 610, 0xCBCB4C, 1)
 		If Not @error Then
 			SyncProcess(False)
 			ClaimQuests()
@@ -150,13 +150,13 @@ Func Main()
 		EndIf
 
 		; Rage when Soul Bonus
-		PixelSearch(625, 143, 629, 214, 0xA86D0A)
+		PixelSearch(625, 143, 629, 214, 0xA86D0A, 1)
 		If Not @error Then
 			ControlSend("Idle Slayer", "", "", "{r}")
 		EndIf
 
 		; Collect minions
-		PixelSearch(99, 113, 99, 113, 0xFFFF7A)
+		PixelSearch(99, 113, 99, 113, 0xFFFF7A, 1)
 		If Not @error Then
 			SyncProcess(False)
 			CollectMinion()
@@ -165,9 +165,9 @@ Func Main()
 
 
 		; Chest-hunt
-		PixelSearch(187, 296, 187, 296, 0xFFBB31)
+		PixelSearch(187, 296, 187, 296, 0xFFBB31, 1)
 		If Not @error Then
-			PixelSearch(187, 303, 187, 303, 0xF68F37)
+			PixelSearch(187, 303, 187, 303, 0xF68F37, 1)
 			If Not @error Then
 				SyncProcess(False)
 				Chesthunt($bNoLockpickingState, $bPerfectChestHuntState, $bNoReinforcedCrystalSaverState)
@@ -182,9 +182,9 @@ Func Main()
 			CloseAll()
 
 			; Bonus stage
-			PixelSearch(660, 254, 660, 254, 0xFFE737)
+			PixelSearch(660, 254, 660, 254, 0xFFE737, 1)
 			If Not @error Then
-				PixelSearch(638, 236, 638, 236, 0xFFBB31)
+				PixelSearch(638, 236, 638, 236, 0xFFBB31, 1)
 				If Not @error Then
 						SyncProcess(False)
 						BonusStage($bSkipBonusStageState)
@@ -193,14 +193,14 @@ Func Main()
 			EndIf
 
 			; Boss Fight
-			PixelSearch(639, 224, 639, 224, 0xFF878A)
+			PixelSearch(639, 224, 639, 224, 0xFF878A, 1)
 			If Not @error Then
-				PixelSearch(634, 224, 634, 224, 0xF263BD)
+				PixelSearch(634, 224, 634, 224, 0xF263BD, 1)
 				If Not @error Then
-					PixelSearch(644, 224, 644, 224, 0xFFF38F)
+					PixelSearch(644, 224, 644, 224, 0xFFF38F, 1)
 					If Not @error Then
 						SyncProcess(False)
-						PixelSearch(30, 690, 30, 690, 0x0B0303)
+						PixelSearch(30, 690, 30, 690, 0x0B0303, 1)
 						If Not @error Then
 							BossFightKnight()
 						Else
@@ -212,9 +212,9 @@ Func Main()
 			EndIf
 
 			; Ascending Heights
-			PixelSearch(671, 213, 671, 213, 0xC2F4F9)
+			PixelSearch(671, 213, 671, 213, 0xC2F4F9, 1)
 			If Not @error Then
-				PixelSearch(640, 240, 634, 640, 0xFFCC66)
+				PixelSearch(640, 240, 634, 640, 0xFFCC66, 1)
 				If Not @error Then
 					SyncProcess(False)
 					AscendingHeights()
@@ -260,7 +260,7 @@ EndFunc   ;==>Main
 
 Func CloseAll()
 	Sleep(2000)
-	PixelSearch(680, 593, 680, 593, 0xAF0000)
+	PixelSearch(680, 593, 680, 593, 0xAF0000, 1)
 	If Not @error Then
 		MouseClick("left", 780, 600, 1, 0)
 	EndIf
@@ -313,7 +313,7 @@ Func Rage()
 EndFunc   ;==>Rage
 
 Func CheckForSoulBonus()
-	PixelSearch(625, 143, 629, 214, 0xA86D0A)
+	PixelSearch(625, 143, 629, 214, 0xA86D0A, 1)
 	If Not @error Then
 		WriteInLogs("MegaHorde Rage with SoulBonus")
 		Return True
@@ -331,7 +331,7 @@ Func BuyTempItem($sHexColor)
 	MouseClick("left", 260, 690, 1, 0)
 	Sleep(150)
 
-	$aFoundPixel = PixelSearch(43, 330, 625, 630, $sHexColor)
+	$aFoundPixel = PixelSearch(43, 330, 625, 630, $sHexColor, 1)
 	If Not @error Then
 		MouseClick("left", $aFoundPixel[0], $aFoundPixel[1], 1, 0)
 		Sleep(200)
@@ -346,7 +346,7 @@ Func BuyTempItem($sHexColor)
 EndFunc   ;==>BuyTempItem
 
 Func AutoAscend()
-	PixelSearch(260, 600, 260, 600, 0x58188D)
+	PixelSearch(260, 600, 260, 600, 0x58188D, 1)
 	If Not @error Then
 		MouseClick("left", 260, 600, 1, 0)
 		Sleep(300)
@@ -360,7 +360,7 @@ Func AutoAscend()
 		;Click ascension tab
 		MouseClick("left", 93, 680, 1, 0)
 		Sleep(400)
-		PixelSearch(260, 480, 260, 480, 0x58188D)
+		PixelSearch(260, 480, 260, 480, 0x58188D, 1)
 		If Not @error Then
 			MouseClick("left", 260, 600, 1, 0)
 			Sleep(300)
@@ -389,7 +389,7 @@ Func CollectMinion()
 	Sleep(200)
 
 	;Check if Daily Bonus is available
-	PixelSearch(370, 410, 910, 470, 0x11AA23, 9)
+	PixelSearch(370, 410, 910, 470, 0x11AA23, 9, 1)
 	If Not @error Then
 		;Click Claim All
 		MouseClick("left", 320, 280, 5, 0)
@@ -418,11 +418,11 @@ EndFunc   ;==>CollectMinion
 Func CirclePortals()
 	;Check if portal button is visible
 	Local $iPortalVisible = 0
-	PixelSearch(1180, 166, 1180, 166, 0x830399)
+	PixelSearch(1180, 166, 1180, 166, 0x830399, 1)
 	If @error Then
 		$iPortalVisible += 1
 	EndIf
-	PixelSearch(1180, 166, 1180, 166, 0x290130)
+	PixelSearch(1180, 166, 1180, 166, 0x290130, 1)
 	If @error Then
 		$iPortalVisible += 1
 	EndIf
@@ -432,7 +432,7 @@ Func CirclePortals()
 	EndIf
 
 	;Check if timer is up
-	PixelSearch(1154, 144, 1210, 155, 0xFFFFFF, 9)
+	PixelSearch(1154, 144, 1210, 155, 0xFFFFFF, 9, 1)
 	If @error Then
 		SyncProcess(False)
 		;Click portal button
@@ -446,7 +446,7 @@ Func CirclePortals()
 		Do
 			MouseWheel($MOUSE_WHEEL_UP, 20)
 			;Top of searchbar
-			PixelSearch(875, 250, 875, 250, 0xD6D6D6)
+			PixelSearch(875, 250, 875, 250, 0xD6D6D6, 1)
 		Until @error
 		Sleep(400)
 
@@ -482,10 +482,10 @@ Func CirclePortals()
 		EndSwitch
 		Local $aLocation
 		While 1
-			$aLocation = PixelSearch(470, 230, 470, 540, $sColor, 10)
+			$aLocation = PixelSearch(470, 230, 470, 540, $sColor, 10, 1)
 			If @error Then
 				;Check gray scroll bar is there
-				PixelSearch(875, 536, 875, 536, 0xD6D6D6)
+				PixelSearch(875, 536, 875, 536, 0xD6D6D6, 1)
 				If @error Then
 					MouseClick("left", 600, 600, 1, 0)
 					ExitLoop
@@ -524,7 +524,7 @@ Func AutoUpgrade()
 	MouseClick("left", 1163, 655, 1, 0)
 	Sleep(150)
 	; check with corner if it is open
-	PixelSearch(807, 140, 807, 155, 0xFFFFFF)
+	PixelSearch(807, 140, 807, 155, 0xFFFFFF, 1)
 	If Not @error Then
 		BuyUpgrade()
 	EndIf
@@ -537,7 +537,7 @@ Func BuyEquipment()
 	;Click Max buy
 	MouseClick("left", 1180, 636, 4, 0)
 	;Check if scrollbar is here if no max buy first item otherwise last item
-	PixelSearch(1257, 340, 1257, 340, 0x11AA23)
+	PixelSearch(1257, 340, 1257, 340, 0x11AA23, 1)
 	If Not @error Then
 		;buy sword
 		MouseClick("left", 1200, 200, 5, 0)
@@ -549,12 +549,12 @@ Func BuyEquipment()
 	Local $aLocation
 	While 1
 		;Check if there is any green buy boxes
-		$aLocation = PixelSearch(1160, 590, 1160, 170, 0x11AA23, 10)
+		$aLocation = PixelSearch(1160, 590, 1160, 170, 0x11AA23, 10, 1)
 		If @error Then
 			;Move mouse on ScrollBar
 			MouseMove(1260, 170, 0)
 			MouseWheel($MOUSE_WHEEL_UP, 1)
-			PixelSearch(1260, 168, 1260, 168, 0xD6D6D6)
+			PixelSearch(1260, 168, 1260, 168, 0xD6D6D6, 1)
 			If @error Then
 				ExitLoop
 			EndIf
@@ -578,25 +578,25 @@ Func BuyUpgrade()
 	Do
 		MouseWheel($MOUSE_WHEEL_UP, 20)
 		;Top of searchbar
-		PixelSearch(1254, 167, 1254, 167, 0xD6D6D6)
+		PixelSearch(1254, 167, 1254, 167, 0xD6D6D6, 1)
 	Until @error
 	Sleep(400)
 	Local $bSomethingBought = False
 	Local $iY = 170
 	While 1
 		; Check if RandomBox Magnet is next upgrade
-		PixelSearch(882, $iY, 909, $iY + 72, 0xF4B41B)
+		PixelSearch(882, $iY, 909, $iY + 72, 0xF4B41B, 1)
 		If Not @error Then
 			$iY += 96
 		EndIf
 		; Check if RandomBox Magnet is next upgrade
-		PixelSearch(882, $iY, 909, $iY + 72, 0xE478FF)
+		PixelSearch(882, $iY, 909, $iY + 72, 0xE478FF, 1)
 		If Not @error Then
 			$iY += 96
 		EndIf
-		PixelSearch(1180, $iY + 10, 1180, $iY + 10, 0x11A622)
+		PixelSearch(1180, $iY + 10, 1180, $iY + 10, 0x11A622, 1)
 		If @error Then
-			PixelSearch(1180, $iY + 10, 1180, $iY + 10, 0x0C7418)
+			PixelSearch(1180, $iY + 10, 1180, $iY + 10, 0x0C7418, 1)
 			If @error Then
 				ExitLoop
 			EndIf
@@ -637,23 +637,23 @@ Func ClaimQuests()
 		MouseWheel($MOUSE_WHEEL_UP, 20)
 		;Top of searchbar
 		Sleep(20)
-		PixelSearch(1254, 267, 1254, 267, 0xD6D6D6)
+		PixelSearch(1254, 267, 1254, 267, 0xD6D6D6, 1)
 	Until @error
 	Sleep(600)
 
 	While 1
 		;Check if there is any green buy boxes
-		$aLocation = PixelSearch(1160, 270, 1160, 590, 0x11A622, 10)
+		$aLocation = PixelSearch(1160, 270, 1160, 590, 0x11A622, 10, 1)
 		If @error Then
 			;Move mouse on ScrollBar
 			MouseMove(1267, 270, 0)
 			MouseWheel($MOUSE_WHEEL_DOWN, 1)
 			;Check gray scroll bar is there
-			PixelSearch(1267, 658, 1267, 658, 0xA0A0A0)
+			PixelSearch(1267, 658, 1267, 658, 0xA0A0A0, 1)
 			If @error Then
 				ExitLoop
 			EndIf
-			PixelSearch(1267, 655, 1267, 655, 0xFFFFFF)
+			PixelSearch(1267, 655, 1267, 655, 0xFFFFFF, 1)
 			If Not @error Then
 				ExitLoop
 			EndIf

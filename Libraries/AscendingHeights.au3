@@ -10,7 +10,7 @@ Func AscendingHeights()
 	Do
 		Slider()
 		Sleep(500)
-		PixelSearch(640, 240, 634, 640, 0xFFCC66)
+		PixelSearch(640, 240, 634, 640, 0xFFCC66, 1)
 	Until @error
 	Sleep(3900)
 	AscendingHeightsPlay()
@@ -42,19 +42,19 @@ Func AscendingHeightsPlay()
 		If TimerDiff($iLastCheckTime) >= 5000 Then
 			$iLastCheckTime = TimerInit()
 
-			PixelSearch(190, 125, 190, 125, 0xFFAF36)
+			PixelSearch(190, 125, 190, 125, 0xFFAF36, 1)
 			If Not @error Then
 				WriteInLogs("Ascending Height Failed")
 				ExitLoop
 			EndIf
 
-			PixelSearch(540, 560, 540, 560, 0x00A400)
+			PixelSearch(540, 560, 540, 560, 0x00A400, 1)
 			If Not @error Then
 				Sleep(2000)
 				MouseClick("left", 560, 570, 1, 0)
 			EndIf
 
-			PixelSearch(700, 385, 730, 385, 0x7A444A)
+			PixelSearch(700, 385, 730, 385, 0x7A444A, 1)
 			If Not @error Then
 				cSend(15000, 0, "d")
 				WriteInLogs("Ascending Height Won")
@@ -62,7 +62,7 @@ Func AscendingHeightsPlay()
 			EndIf
 		EndIf
 
-		$aPosPlayer = PixelSearch(375, 260, 900, 730, 0x633E75)
+		$aPosPlayer = PixelSearch(375, 260, 900, 730, 0x633E75, 1)
 		If @error Then ContinueLoop
 
 		$aPosPlatform = searchAllPlatformBellowPlayer($aPosPlayer[0], $aPosPlayer[1], $bSame)
@@ -102,12 +102,12 @@ Func searchAllPlatformBellowPlayer($iPlayerX, $iPlayerY, $bSame)
 		If $iLeft < 375 Then $iLeft = 375
 		If $iRight > 900 Then $iLeft = 900
 
-		Local $aPosPlatform = PixelSearch($iLeft, $iPlayerY + 50, $iRight, 752, 0xC0CBDC)
+		Local $aPosPlatform = PixelSearch($iLeft, $iPlayerY + 50, $iRight, 752, 0xC0CBDC, 1)
 		If @error Then
-			$aPosPlatform = PixelSearch(375, $iPlayerY + 50, 900, 752, 0xC0CBDC)
+			$aPosPlatform = PixelSearch(375, $iPlayerY + 50, 900, 752, 0xC0CBDC, 1)
 		EndIf
 	Else
-		$aPosPlatform = PixelSearch(375, $iPlayerY + 50, 900, 752, 0xC0CBDC)
+		$aPosPlatform = PixelSearch(375, $iPlayerY + 50, 900, 752, 0xC0CBDC, 1)
 	EndIf
 
 	If Not @error Then
@@ -116,10 +116,10 @@ Func searchAllPlatformBellowPlayer($iPlayerX, $iPlayerY, $bSame)
 			$iLoopCounter += 1
 			If $iLoopCounter > 1000 Then Return False ; Exit if too many iterations
 			
-			PixelSearch($aPosPlatform[0] + 6, $aPosPlatform[1], $aPosPlatform[0] + 6, $aPosPlatform[1], 0x8B9BB4)
+			PixelSearch($aPosPlatform[0] + 6, $aPosPlatform[1], $aPosPlatform[0] + 6, $aPosPlatform[1], 0x8B9BB4, 1)
 			If @error Then Return $aPosPlatform
 			If $aPosPlatform[1] + 2 > 752 Then Return False
-			$aPosPlatform = PixelSearch(375, $aPosPlatform[1] + 1, 900, 752, 0xC0CBDC)
+			$aPosPlatform = PixelSearch(375, $aPosPlatform[1] + 1, 900, 752, 0xC0CBDC, 1)
 			If @error Then Return False
 		WEnd
 	EndIf
