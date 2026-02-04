@@ -4,7 +4,7 @@
 Func BonusStage($bSkipBonusStageState)
 	WriteInLogs("Start of BonusStage")
 	Sleep(200)
-	PixelSearch(160, 498, 200, 498, 0x16171F)
+	PixelSearch(160, 498, 200, 498, 0x16171F, 1)
 	If Not @error Then
 		$bBonusStage3 = True
 	Else
@@ -14,7 +14,7 @@ Func BonusStage($bSkipBonusStageState)
 	Do
 		Slider()
 		Sleep(500)
-		PixelSearch(775, 448, 775, 448, 0xFFFFFF)
+		PixelSearch(775, 448, 775, 448, 0xFFFFFF, 1)
 	Until @error
 
 	If $bSkipBonusStageState Then
@@ -23,7 +23,7 @@ Func BonusStage($bSkipBonusStageState)
 	EndIf
 
 	Sleep(3900)
-	PixelSearch(454, 91, 454, 91, 0xE1E0E2)
+	PixelSearch(454, 91, 454, 91, 0xE1E0E2, 1)
 	If Not @error Then
 		If $bBonusStage3 Then
 			BonusStage3SB()
@@ -49,7 +49,7 @@ EndFunc   ;==>BonusStageDoNothing
 Func BonusStageFail($iNumber)
 	Local $sLogMsg = "BonusStage" & $iNumber & " Failed"
 
-	PixelSearch(716, 600, 716, 600, 0xAF0000)
+	PixelSearch(716, 600, 716, 600, 0xAF0000, 1)
 	If Not @error Then
 		MouseClick("left", 716, 600, 1, 0)
 		WriteInLogs($sLogMsg)
@@ -61,7 +61,7 @@ EndFunc   ;==>BonusStageFail
 Func BonusStageRetry($iNumber, $bSpiritBoost)
 	Local $sLogMsg = "BonusStage" & $iNumber & ($bSpiritBoost ? "SB" : "")
 
-	PixelSearch(615, 590, 615, 590, 0x00A400)
+	PixelSearch(615, 590, 615, 590, 0x00A400, 1)
 	If Not @error Then
 		MouseClick("left", 560, 600, 1, 0)
 		WriteInLogs($sLogMsg & " Retry")
@@ -85,21 +85,21 @@ Func BonusStage3Fail($bSpiritBoost)
 	EndIf
 
 	; Search for Items icon
-	PixelSearch(1130, 604, 1130, 604, 0x989898)
+	PixelSearch(1130, 604, 1130, 604, 0x989898, 1)
 	If Not @error Then
 		WriteInLogs($sLogMsg & " Failed")
 		Return True
 	EndIf
 
 	; Search for Boost icon
-	PixelSearch(115, 570, 125, 590, 0x09439b)
+	PixelSearch(115, 570, 125, 590, 0x09439b, 1)
 	If Not @error Then
 		WriteInLogs($sLogMsg & " Failed")
 		Return True
 	EndIf
 
 	; Search for Wind Rush icon
-	PixelSearch(115, 570, 125, 590, 0x099b66)
+	PixelSearch(115, 570, 125, 590, 0x099b66, 1)
 	If Not @error Then
 		WriteInLogs($sLogMsg & " Failed")
 		Return True

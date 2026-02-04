@@ -19,7 +19,7 @@ Func Chesthunt($bNoLockpickingState, $bPerfectChestHuntState, $bNoReinforcedCrys
 	; Locate saver
 	For $iY = 1 To 3
 		For $iX = 1 To 10
-			PixelSearch($iPixelX, $iPixelY - 1, $iPixelX + 5, $iPixelY, 0xFFEB04)
+			PixelSearch($iPixelX, $iPixelY - 1, $iPixelX + 5, $iPixelY, 0xFFEB04, 1)
 			If Not @error Then
 				WriteInLogs("Saver Found")
 				$iSaverX = $iPixelX
@@ -42,12 +42,12 @@ Func Chesthunt($bNoLockpickingState, $bPerfectChestHuntState, $bNoReinforcedCrys
 		Sleep(50)
 		$iEndScreenAttempts += 1
 
-		PixelSearch(550, 694, 550, 694, 0xAF0000)
+		PixelSearch(550, 694, 550, 694, 0xAF0000, 1)
 		If Not @error Then
 			ExitLoop
 		EndIf
 		; Look for Perfect Chest
-		PixelSearch(457, 439, 457, 439, 0xF68F37)
+		PixelSearch(457, 439, 457, 439, 0xF68F37, 1)
 		If Not @error Then
 			$bPerfectChest = True
 			MouseClick("left", 457, 439, 1, 0)
@@ -208,13 +208,13 @@ Func OpenChest($iPixelX, $iPixelY, $bNoLockpickingState)
 		Sleep(550)
 	EndIf
 	; Check if chest hunt ended
-	PixelSearch(550, 694, 550, 694, 0xAF0000)
+	PixelSearch(550, 694, 550, 694, 0xAF0000, 1)
 	If Not @error Then
 		Return $eChestHuntEnd
 	EndIf
 
 	; if 2 x wait some more
-	PixelSearch(500, 210, 500, 210, 0x00FF00)
+	PixelSearch(500, 210, 500, 210, 0x00FF00, 1)
 	If Not @error Then
 		WriteInLogs("X2 chest")
 		Sleep(1000)
@@ -222,7 +222,7 @@ Func OpenChest($iPixelX, $iPixelY, $bNoLockpickingState)
 	EndIf
 
 	; if mimic wait some more
-	PixelSearch(434, 211, 434, 211, 0xFF0000)
+	PixelSearch(434, 211, 434, 211, 0xFF0000, 1)
 	If Not @error Then
 		If $bNoLockpickingState Then
 			Sleep(2500)

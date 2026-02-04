@@ -7,7 +7,7 @@ Func BossFightKnight()
 	Do
 		Slider()
 		Sleep(500)
-		PixelSearch(653, 222, 653, 222, 0xFFF38F)
+		PixelSearch(653, 222, 653, 222, 0xFFF38F, 1)
 	Until @error
 	WriteInLogs("Slider done")
 	BossBattleKnight()
@@ -23,20 +23,20 @@ Func BossBattleKnight()
 
 	While 1
 		If $iAttackTimer < TimerDiff($hAttackTimer) Then
-			$aPos = PixelSearch(900, 150, 900, 343, 0x2C2C2C)
+			$aPos = PixelSearch(900, 150, 900, 343, 0x2C2C2C, 1)
 			If Not @error Then
 				$hAttackTimer = TimerInit()
 				WriteInLogs("RangeAttackKnight")
 				RangeAttackKnight($aPos)
 			EndIf
-			$aPos = PixelSearch(445, 210, 445, 387, 0xAF9967)
+			$aPos = PixelSearch(445, 210, 445, 387, 0xAF9967, 1)
 			If Not @error Then
 				$hAttackTimer = TimerInit()
 				WriteInLogs("CloseAttackKnight")
 				CloseAttackKnight($aPos)
 			EndIf
 
-			$aPos = PixelSearch(445, 210, 445, 387, 0xD7CCB3)
+			$aPos = PixelSearch(445, 210, 445, 387, 0xD7CCB3, 1)
 			If Not @error Then
 				$hAttackTimer = TimerInit()
 				WriteInLogs("CloseAttackKnight 2")
@@ -47,7 +47,7 @@ Func BossBattleKnight()
 		If $iTimer < TimerDiff($hTime) Then
 
 			If $bFirstStage == True Then
-				PixelSearch(260, 130, 272, 130, 0xF5B784)
+				PixelSearch(260, 130, 272, 130, 0xF5B784, 1)
 				If Not @error Then
 					;ConsoleWrite(' Dialog ')
 					WriteInLogs("Dialog")
@@ -55,7 +55,7 @@ Func BossBattleKnight()
 					Do
 						Sleep(100)
 						MouseClick("left", 1020, 420, 1, 0)
-						PixelSearch(260, 130, 272, 130, 0xF5B784)
+						PixelSearch(260, 130, 272, 130, 0xF5B784, 1)
 					Until @error
 					ControlFocus("Idle Slayer", "", "")
 					WriteInLogs("Dialog done")
@@ -64,14 +64,14 @@ Func BossBattleKnight()
 				EndIf
 			EndIf
 
-			PixelSearch(535, 75, 535, 75, 0x000000)
+			PixelSearch(535, 75, 535, 75, 0x000000, 1)
 			If Not @error Then
 				WriteInLogs("Knight Dark stage")
 				;ConsoleWrite(" Dark ")
 				Local $hTimer = TimerInit()
 				Do
 					MouseClick('left', 1000, 328, 1, 0)
-					PixelSearch(835, 477, 835, 477, 0xFD3169)
+					PixelSearch(835, 477, 835, 477, 0xFD3169, 1)
 					If Not @error Then
 						Sleep(500)
 						MouseClick('left', 615, 563)

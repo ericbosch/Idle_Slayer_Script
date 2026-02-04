@@ -28,7 +28,7 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 		; Search red !
         While 1
             ; Red pixel !
-            $aCoord = PixelSearch(31, 239, 472, 500, 0xE41111)
+            $aCoord = PixelSearch(31, 239, 472, 500, 0xE41111, 1)
 
             If Not @error Then
 				WriteInLogs("SellArmory 1 New Item Found")
@@ -44,11 +44,11 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 				If $bArmoryExcVictorState Then
 					;Search pattern for Exc Victor Ring  0x51E294 Positions : 711,518 . 629,519 . 687,515 .
 					Sleep(500) 
-					PixelSearch(711, 518, 711, 518, 0x51E294)
+					PixelSearch(711, 518, 711, 518, 0x51E294, 1)
 					If Not @error Then
-						PixelSearch(629, 519, 629, 519, 0x51E294)
+						PixelSearch(629, 519, 629, 519, 0x51E294, 1)
 						If Not @error Then
-							PixelSearch(687, 515, 687, 515, 0x51E294)
+							PixelSearch(687, 515, 687, 515, 0x51E294, 1)
 							If Not @error Then
 								WriteInLogs("SellArmory Excelent Victor Ring sold")
 
@@ -62,11 +62,11 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 					; Dont sell 
 					;Search pattern for Exc Victor Ring Positions : 711,518 . 629,519 . 687,515 .
 					Sleep(500) 
-					PixelSearch(711, 518, 711, 518, 0x51E294)
+					PixelSearch(711, 518, 711, 518, 0x51E294, 1)
 					If Not @error Then
-						PixelSearch(629, 519, 629, 519, 0x51E294)
+						PixelSearch(629, 519, 629, 519, 0x51E294, 1)
 						If Not @error Then
-							PixelSearch(687, 515, 687, 515, 0x51E294)
+							PixelSearch(687, 515, 687, 515, 0x51E294, 1)
 							If Not @error Then
 								WriteInLogs("SellArmory Excelent Victor Ring wasn´t sold")
 								
@@ -83,7 +83,7 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 				If $bArmoryNonExcellentState Then
 					;Not Excelent Item (since 478,507, to 776,530)  0xFFFFFF White
 					Sleep(500)
-					PixelSearch(478,507, 776,530, 0xFFFFFF)
+					PixelSearch(478,507, 776,530, 0xFFFFFF, 1)
 					If Not @error Then
 						WriteInLogs("SellArmory Not Excelent Item sold")
 
@@ -94,7 +94,7 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 				Else
 					;Not Excelent Item (since 478,507, to 776,530)  0xFFFFFF White
 					Sleep(500)
-					PixelSearch(478,507, 776,530, 0xFFFFFF)
+					PixelSearch(478,507, 776,530, 0xFFFFFF, 1)
 					If Not @error Then
 						WriteInLogs("SellArmory > Not Excelent Item wasn´t sold")
 
@@ -109,7 +109,7 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 				If $bArmoryNonExcellentState Then
 					;Not Excelent Item (since 478,507, to 776,530)   0x738FE3 Blue
 					Sleep(500)
-					PixelSearch(478,507, 776,530, 0x738FE3)
+					PixelSearch(478,507, 776,530, 0x738FE3, 1)
 					If Not @error Then
 						WriteInLogs("SellArmory Not Excelent Item sold")
 
@@ -120,7 +120,7 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 				Else
 					;Not Excelent Item (since 478,507, to 776,530)   0x738FE3 Blue
 					Sleep(500)
-					PixelSearch(478,507, 776,530, 0x738FE3)
+					PixelSearch(478,507, 776,530, 0x738FE3, 1)
 					If Not @error Then
 						WriteInLogs("SellArmory > Not Excelent Item wasn´t sold")
 
@@ -135,7 +135,7 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 				If $bArmoryExcellentState Then
 					;Excelent Item (since 478,507, to 776,530) GREEN  0x51E294
 					Sleep(500)
-					PixelSearch(478,507, 776,530, 0x51E294)
+					PixelSearch(478,507, 776,530, 0x51E294, 1)
 					If Not @error Then
 						WriteInLogs("SellArmory Excelent Item sold")
 
@@ -146,7 +146,7 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 				Else
                 	;Excelent Item (since 478,507, to 776,530) GREEN  0x51E294
 					Sleep(500)
-					PixelSearch(478,507, 776,530, 0x51E294)
+					PixelSearch(478,507, 776,530, 0x51E294, 1)
 					If Not @error Then
 						WriteInLogs("SellArmory Excelent Item wasn´t sold")
 
