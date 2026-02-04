@@ -5,14 +5,25 @@ set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
 cd /d "%SCRIPT_DIR%"
 
 set "AU3=Idle Runner.au3"
-set "VERSION=3.5.7"
+set "VERSION=3.5.7.1"
 set "RELEASE_DIR=%SCRIPT_DIR%\Release\%VERSION%"
 set "ZIP_NAME=Idle.Runner_%VERSION%.zip"
 
-:: Try to find AutoIt3Wrapper (full compile with resources)
+:: Try to find AutoIt3Wrapper (full compile with resources). Wrapper can be .exe or .au3 (run with AutoIt3.exe).
 set "WRAPPER="
+set "AUTOIT3="
 if exist "C:\Program Files (x86)\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.exe" set "WRAPPER=C:\Program Files (x86)\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.exe"
 if exist "C:\Program Files\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.exe" set "WRAPPER=C:\Program Files\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.exe"
+if "%WRAPPER%"=="" (
+    if exist "C:\Program Files (x86)\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.au3" (
+        set "WRAPPER=C:\Program Files (x86)\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.au3"
+        set "AUTOIT3=C:\Program Files (x86)\AutoIt3\AutoIt3.exe"
+    )
+    if exist "C:\Program Files\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.au3" (
+        set "WRAPPER=C:\Program Files\AutoIt3\SciTE\AutoIt3Wrapper\AutoIt3Wrapper.au3"
+        set "AUTOIT3=C:\Program Files\AutoIt3\AutoIt3.exe"
+    )
+)
 if "%WRAPPER%"=="" (
     echo AutoIt3Wrapper not found. Please compile manually:
     echo   1. Right-click "%AU3%" -^> Compile with Options
@@ -22,7 +33,11 @@ if "%WRAPPER%"=="" (
 )
 
 echo Building with AutoIt3Wrapper...
-"%WRAPPER%" /in "%AU3%" /prod /verbose
+if defined AUTOIT3 (
+    "%AUTOIT3%" "%WRAPPER%" /in "%AU3%" /prod
+) else (
+    "%WRAPPER%" /in "%AU3%" /prod
+)
 if errorlevel 1 (
     echo Compile failed.
     exit /b 1

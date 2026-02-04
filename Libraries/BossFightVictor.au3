@@ -21,7 +21,6 @@ Func BossBattleVictor()
 		If $bFirstStage == False Then
 			PixelSearch(1072, 150, 1072, 488, 0xFFFFFF, 1)
 			If Not @error Then
-				Send("!{PRINTSCREEN}")
 				FlameAttackVictor()
 			EndIf
 		EndIf
