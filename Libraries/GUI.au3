@@ -173,19 +173,19 @@ Func CreateGeneralSheet($hGUIForm, $iTabControl)
 	; Create CirclePortals Checkbox
 	Global $iCheckBoxbCirclePortalsState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 83, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iCirclePortals = GUICtrlCreatePicCustom('Resources\CirclePortals.jpg', 207, 84, 129, 14, $SS_BITMAP + $SS_NOTIFY)
+	Local $iCirclePortals = GUICtrlCreatePicCustom('Resources\CirclePortals.jpg', 207, 83, 110, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iCirclePortals, 'CIRCLEPORTALS')
 	GUICtrlSetTip(-1, "Cycles Portals as soon the portal is ready")
 
 	; Create Disable Rage Horde Checkbox
 	Global $iCheckBoxbDisableRageState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 122, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iDisableRage = GUICtrlCreatePicCustom('Resources\DisableRage.jpg', 207, 122, 183, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iDisableRage = GUICtrlCreatePicCustom('Resources\DisableRage.jpg', 207, 122, 157, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iDisableRage, 'DISABLERAGE')
 	GUICtrlSetTip(-1, "When Checked will not rage at Megahordes without soulbonus")
 
 	; Create JumpRate Slider
-	Local $iJumpSlider = GUICtrlCreatePicCustom('Resources\JumpRate.jpg', 181, 45, 98, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iJumpSlider = GUICtrlCreatePicCustom('Resources\JumpRate.jpg', 181, 44, 96, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iJumpSlider, 'JUMPRATE')
 
 	Global $iJumpNumber = GUICtrlCreatePicCustom('Resources\150.jpg', 289, 42, 42, 22, $SS_BITMAP + $SS_NOTIFY)
@@ -200,7 +200,7 @@ Func CreateGeneralSheet($hGUIForm, $iTabControl)
 	; Create AutoBuyUpgrades Checkbox
 	Global $iCheckBoxbAutoBuyUpgradeState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 380, 44, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iAutoUpgrade = GUICtrlCreatePicCustom('Resources\AutoBuyUpgrades.jpg', 400, 45, 165, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iAutoUpgrade = GUICtrlCreatePicCustom('Resources\AutoBuyUpgrades.jpg', 400, 44, 153, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iAutoUpgrade, 'AUTOUPGRADES')
 	GUICtrlSetTip(-1, "Buys upgrades except Vertical Magnet and Electric Worms. It will start after 10 sec you actived it and after the set number is in minutes")
 	Global $iAutoBuyNumber = GUICtrlCreateInput($iAutoBuyTimer, 575, 45, 50, 20, $ES_NUMBER)
@@ -210,7 +210,7 @@ Func CreateGeneralSheet($hGUIForm, $iTabControl)
 	; Create Auto Ascend
 	Global $iCheckBoxbAutoAscendState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 380, 83, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iAutoAscend = GUICtrlCreatePicCustom('Resources\AutoAscend.jpg', 400, 83, 98, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iAutoAscend = GUICtrlCreatePicCustom('Resources\AutoAscend.jpg', 400, 83, 104, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iAutoAscend, 'AUTOASCEND')
 	GUICtrlSetTip(-1, "Auto Ascend after a certain amount of time. The number is in minutes")
 	Global $iAutoAscendNumber = GUICtrlCreateInput($iAutoAscendTimer, 510, 83, 50, 20, $ES_NUMBER)
@@ -220,7 +220,7 @@ Func CreateGeneralSheet($hGUIForm, $iTabControl)
 	; Create Restart Game Checkbox
 	Global $iCheckBoxbRestartGameState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 160, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iRestartGame = GUICtrlCreatePicCustom('Resources\RestartGame.jpg', 207, 160, 230, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iRestartGame = GUICtrlCreatePicCustom('Resources\RestartGame.jpg', 207, 160, 212, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iRestartGame, 'RESTARTGAME')
 	GUICtrlSetTip(-1, "Restart the game after X hours")
 	Global $iRestartGameNumber = GUICtrlCreateInput($iRestartGameTimer, 450, 160, 50, 20, $ES_NUMBER)
@@ -237,25 +237,25 @@ Func CreateMinigamesSheet($hGUIForm, $iTabControl)
 
 	Global $iCheckBoxbSkipBonusStageState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 44, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iSkipBonus = GUICtrlCreatePicCustom('Resources\SkipBonusStage.jpg', 207, 45, 160, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iSkipBonus = GUICtrlCreatePicCustom('Resources\SkipBonusStage.jpg', 207, 44, 140, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iSkipBonus, 'SKIPBONUS')
 	GUICtrlSetTip(-1, "Skips Bonus Stages by letting the timer run out without doing anything")
 
 	Global $iCheckBoxbNoLockpickingState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 83, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iNoLockpicking = GUICtrlCreatePicCustom('Resources\NoLockpicking.jpg', 207, 84, 176, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iNoLockpicking = GUICtrlCreatePicCustom('Resources\NoLockpicking.jpg', 207, 83, 157, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iNoLockpicking, 'NOLOCKPICKING')
 	GUICtrlSetTip(-1, "Determines if you have the Divinity Lockpicking 100.")
 
 	Global $iCheckBoxbNoReinforcedCrystalSaverState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 122, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iNoReinforcedCrystalSaver = GUICtrlCreatePicCustom('Resources\NoReinforcedCrystalSaver.jpg', 207, 123, 241, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iNoReinforcedCrystalSaver = GUICtrlCreatePicCustom('Resources\NoReinforcedCrystalSaver.jpg', 207, 122, 219, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iNoReinforcedCrystalSaver, 'NOREINFORCEDCRYSTALSAVER')
 	GUICtrlSetTip(-1, "Determines if you have unlocked the Permanent Item Reinforced Crystal Saver.")
 
 	Global $iCheckBoxbPerfectChestHuntState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 480, 44, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iPerfectChestHunt = GUICtrlCreatePicCustom('Resources\PerfectChestHunt.jpg', 506, 44, 183, 18, $SS_BITMAP + $SS_NOTIFY)
+	Local $iPerfectChestHunt = GUICtrlCreatePicCustom('Resources\PerfectChestHunt.jpg', 506, 44, 152, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iPerfectChestHunt, 'PERFECTCHESTHUNT')
 	GUICtrlSetTip(-1, "Uses a riskier strategy that prioritizes Perfect Chest Hunts over resources. Strategy summary: ignores Life Saver until 2x is found. The 2x2x Dark Divinity must be turned off.")
 
@@ -270,28 +270,28 @@ Func CreateCraftingSheet($hGUIForm, $iTabControl)
 	; Create CraftSoulBonus Checkbox
 	Global $iCheckBoxbCraftSoulBonusState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 44, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iCraftComp = GUICtrlCreatePicCustom('Resources\CraftSoulBonus.jpg', 207, 45, 153, 14, $SS_BITMAP + $SS_NOTIFY)
+	Local $iCraftComp = GUICtrlCreatePicCustom('Resources\CraftSoulBonus.jpg', 207, 44, 135, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iCraftComp, 'SOULBONUS')
 	GUICtrlSetTip(-1, "When there is a Horde/Mega Horde + Soul Bonus, it will craft Souls Compass")
 
 	; Craft Bidmensional Stuff
 	Global $iCheckBoxbBiDimensionalState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 83, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iCraftBiDimension = GUICtrlCreatePicCustom('Resources\CraftBidimensionalStaff.jpg', 207, 84, 239, 14, $SS_BITMAP + $SS_NOTIFY)
+	Local $iCraftBiDimension = GUICtrlCreatePicCustom('Resources\CraftBidimensionalStaff.jpg', 207, 83, 197, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iCraftBiDimension, 'BIDIMENSIONAL')
 	GUICtrlSetTip(-1, "Craft BiDimensional item at Megahorde and it will disable it itself after one use")
 
 	; Craft Dimensional Stuff
 	Global $iCheckBoxbDimensionalState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 124, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iCraftDimension = GUICtrlCreatePicCustom('Resources\CraftDimensionalStaff.jpg', 207, 124, 221, 14, $SS_BITMAP + $SS_NOTIFY)
+	Local $iCraftDimension = GUICtrlCreatePicCustom('Resources\CraftDimensionalStaff.jpg', 207, 122, 184, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iCraftDimension, 'DIMENSIONAL')
 	GUICtrlSetTip(-1, "Craft Dimensional item at Megahorde and it will disable it itself after one use")
 
 	; Create CraftRagePill Checkbox
 	Global $iCheckBoxbCraftRagePillState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 450, 44, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iRage = GUICtrlCreatePicCustom('Resources\CraftRagePill.jpg', 476, 45, 132, 16, $SS_BITMAP + $SS_NOTIFY)
+	Local $iRage = GUICtrlCreatePicCustom('Resources\CraftRagePill.jpg', 476, 44, 118, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iRage, 'RAGEPILL')
 	GUICtrlSetTip(-1, "When there is Horde/Mega Horde + Soul Bonus, it will craft Rage Pill")
 
@@ -322,23 +322,23 @@ Func CreateArmorySheet($hGUIForm, $iTabControl)
     EventTabSetBkColor($hGUIForm, $iTabControl, 0x36393F)
 
     ;Sell Excellent NEW Victor Rings
-	Global $iCheckBoxbArmoryExcVictorState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 52, 16, 16, $SS_BITMAP + $SS_NOTIFY)
+	Global $iCheckBoxbArmoryExcVictorState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 44, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iArmoryExcVictor = GUICtrlCreatePicCustom('Resources\SellExcVictorRing.jpg', 207, 50, 300, 20, $SS_BITMAP + $SS_NOTIFY)
+	Local $iArmoryExcVictor = GUICtrlCreatePicCustom('Resources\SellExcVictorRing.jpg', 207, 44, 244, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iArmoryExcVictor, 'SELLVICTORRING')
 	GUICtrlSetTip(-1, "Determines if you want to Sell Excellent NEW Victor Rings")
 
     ;Sell Non-Excellent NEW Armor
-	Global $iCheckBoxbArmoryNonExcellentState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 97, 16, 16, $SS_BITMAP + $SS_NOTIFY)
+	Global $iCheckBoxbArmoryNonExcellentState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 83, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iArmoryNonExcellent = GUICtrlCreatePicCustom('Resources\SellNonExcellentArmor.jpg', 207, 94, 290, 20, $SS_BITMAP + $SS_NOTIFY)
+	Local $iArmoryNonExcellent = GUICtrlCreatePicCustom('Resources\SellNonExcellentArmor.jpg', 207, 83, 237, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iArmoryNonExcellent, 'SELLNOEXCELENT')
 	GUICtrlSetTip(-1, "Determines if you want to Sell Non-Excellent NEW Armor")
 
     ;Sell Excellent NEW Armor
-	Global $iCheckBoxbArmoryExcellentState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 138, 16, 16, $SS_BITMAP + $SS_NOTIFY)
+	Global $iCheckBoxbArmoryExcellentState = GUICtrlCreatePicCustom('Resources\CheckboxUnchecked.jpg', 181, 122, 16, 16, $SS_BITMAP + $SS_NOTIFY)
 	GUICtrlSetOnEvent(-1, "EventGlobalCheckBox")
-	Local $iArmoryExcellent = GUICtrlCreatePicCustom('Resources\SellExcellentArmor.jpg', 207, 136, 240, 20, $SS_BITMAP + $SS_NOTIFY)
+	Local $iArmoryExcellent = GUICtrlCreatePicCustom('Resources\SellExcellentArmor.jpg', 207, 122, 201, 22, $SS_BITMAP + $SS_NOTIFY)
 	_Resource_SetToCtrlID($iArmoryExcellent, 'SELLEXCELENT')
 	GUICtrlSetTip(-1, "Determines if you want to Sell Excellent NEW Armor")
 
