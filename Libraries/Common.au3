@@ -18,6 +18,13 @@ Func WriteInLogs($sMessage)
 	_FileWriteLog("IdleRunnerLogs\Logs.txt", $sMessage)
 EndFunc   ;==>WriteInLogs
 
+; Lets long-running mechanisms (boss fights, chesthunt, bonus stage, armory...)
+; bail out early at safe boundaries when the user hits Pause/Stop, instead of
+; only being checked once per Main() loop iteration.
+Func _IsPaused()
+	Return $bTogglePause
+EndFunc   ;==>_IsPaused
+
 Func cSend($iPressDelay, $iPostPressDelay = 0, $sKey = "Up")
 	Send("{" & $sKey & " Down}")
 	Sleep($iPressDelay)

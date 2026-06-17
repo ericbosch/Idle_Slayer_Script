@@ -25,8 +25,18 @@ Func SellArmory($bArmoryExcVictorState, $bArmoryNonExcellentState , $bArmoryExce
 	; Scroll in Armory 7 times
     For $i = 1 To 7
 
+		If _IsPaused() Then
+			WriteInLogs("SellArmory interrupted by Pause")
+			Return
+		EndIf
+
 		; Search red !
         While 1
+            If _IsPaused() Then
+				WriteInLogs("SellArmory interrupted by Pause")
+				Return
+			EndIf
+
             ; Red pixel !
             $aCoord = PixelSearch(31, 239, 472, 500, 0xE41111, 1)
 

@@ -43,6 +43,10 @@ Func BonusStageDoNothing($iNumber)
 	WriteInLogs("Do nothing BonusStage Active")
 	Do
 		Sleep(200)
+		If _IsPaused() Then
+			WriteInLogs("BonusStageDoNothing interrupted by Pause")
+			Return
+		EndIf
 	Until BonusStageFail($iNumber)
 EndFunc   ;==>BonusStageDoNothing
 
@@ -138,6 +142,10 @@ Func BonusStage2SB()
 		Return
 	EndIf
 	WriteInLogs("BonusStage2SB Section 1 Complete")
+	If _IsPaused() Then
+		WriteInLogs("BonusStage2SB interrupted by Pause")
+		Return
+	EndIf
 	; Section 2 sync
 	FindPixelUntilFound(780, 513, 780, 513, 0xBB26DF)
 	; Section 2 start
@@ -177,6 +185,10 @@ Func BonusStage2SB()
 		Return
 	EndIf
 	WriteInLogs("BonusStage2SB Section 2 Complete")
+	If _IsPaused() Then
+		WriteInLogs("BonusStage2SB interrupted by Pause")
+		Return
+	EndIf
 	;Stage 3 sync
 	FindPixelUntilFound(151, 465, 220, 465, 0xCFBCB8)
 	; Section 3 Start
@@ -211,6 +223,10 @@ Func BonusStage2SB()
 		Return
 	EndIf
 	WriteInLogs("BonusStage2SB Section 3 Complete")
+	If _IsPaused() Then
+		WriteInLogs("BonusStage2SB interrupted by Pause")
+		Return
+	EndIf
 	;Section 4 sync
 	FindPixelUntilFound(250, 472, 100, 250, 0x0D2030)
 	Sleep(200)
@@ -283,6 +299,10 @@ Func BonusStage2()
 		Return
 	EndIf
 	WriteInLogs("BonusStage2 Section 1 Complete")
+	If _IsPaused() Then
+		WriteInLogs("BonusStage2 interrupted by Pause")
+		Return
+	EndIf
 	; Section 2 sync
 	FindPixelUntilFound(780, 513, 780, 513, 0xBB26DF)
 	; Section 2 start
@@ -322,6 +342,10 @@ Func BonusStage2()
 		Return
 	EndIf
 	WriteInLogs("BonusStage2 Section 2 Complete")
+	If _IsPaused() Then
+		WriteInLogs("BonusStage2 interrupted by Pause")
+		Return
+	EndIf
 	;Stage 3 sync
 	FindPixelUntilFound(151, 465, 220, 465, 0xCFBCB8)
 	; Section 3 Start
@@ -356,6 +380,10 @@ Func BonusStage2()
 		Return
 	EndIf
 	WriteInLogs("BonusStage2 Section 3 Complete")
+	If _IsPaused() Then
+		WriteInLogs("BonusStage2 interrupted by Pause")
+		Return
+	EndIf
 	;Section 4 sync
 	FindPixelUntilFound(250, 472, 100, 250, 0x0D2030)
 	Sleep(200)
@@ -390,6 +418,11 @@ EndFunc   ;==>BonusStage2
 
 Func BonusStage3($iCurrentSection = 0)
 	Local $iTotalSections = 4
+
+	If _IsPaused() Then
+		WriteInLogs("BonusStage3 interrupted by Pause")
+		Return
+	EndIf
 
 	If $iCurrentSection == 0 Then
 		WriteInLogs("BonusStage3")
@@ -434,6 +467,11 @@ EndFunc   ;==>BonusStage3
 
 Func BonusStage3SB($iCurrentSection = 0)
 	Local $iTotalSections = 4
+
+	If _IsPaused() Then
+		WriteInLogs("BonusStage3SB interrupted by Pause")
+		Return
+	EndIf
 
 	If $iCurrentSection == 0 Then
 		WriteInLogs("BonusStage3SB")
@@ -650,6 +688,11 @@ Func CollectLootBS3($bSpiritBoost, $iCount = 25, $bStopEarly = True)
 	EndIf
 	;Section 3 Collection
 	For $iX = 1 To $iCount
+		If _IsPaused() Then
+			WriteInLogs("CollectLootBS3 interrupted by Pause")
+			Return False
+		EndIf
+
 		; Check if next section already begins then end earlier
 		If $bStopEarly = True And $iX > 8 Then
 			$aPos = FindPixelUntilFound(1100, 240, 1100, 440, 0x8D87A2, 480)

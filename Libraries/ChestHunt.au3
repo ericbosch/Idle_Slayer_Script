@@ -42,6 +42,11 @@ Func Chesthunt($bNoLockpickingState, $bPerfectChestHuntState, $bNoReinforcedCrys
 		Sleep(50)
 		$iEndScreenAttempts += 1
 
+		If _IsPaused() Then
+			WriteInLogs("Chesthunt interrupted by Pause")
+			Return
+		EndIf
+
 		PixelSearch(550, 694, 550, 694, 0xAF0000, 1)
 		If Not @error Then
 			ExitLoop
@@ -72,6 +77,11 @@ Func ProcessChestGrid($iSaverX, $iSaverY, $bNoLockpickingState, $bPerfectChestHu
 
 	For $iY = 1 To 3
 		For $iX = 1 To 10
+			If _IsPaused() Then
+				WriteInLogs("ProcessChestGrid interrupted by Pause")
+				Return
+			EndIf
+
 			; Skip saver no matter what
 			If $iPixelY == $iSaverY And $iPixelX == $iSaverX Then
 				; Go next line If saver is last chest

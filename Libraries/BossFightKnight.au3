@@ -90,6 +90,11 @@ Func BossBattleKnight()
 
 			$hTime = TimerInit()
 		EndIf
+
+		If _IsPaused() Then
+			WriteInLogs("Knight Fight interrupted by Pause")
+			ExitLoop
+		EndIf
 	WEnd
 EndFunc   ;==>BossBattleKnight
 

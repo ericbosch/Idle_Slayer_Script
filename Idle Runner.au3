@@ -506,6 +506,11 @@ Func CirclePortals()
 		EndSwitch
 		Local $aLocation
 		While 1
+			If _IsPaused() Then
+				WriteInLogs("CirclePortals interrupted by Pause")
+				Return
+			EndIf
+
 			$aLocation = PixelSearch(470, 230, 470, 540, $sColor, 10, 1)
 			If @error Then
 				;Check gray scroll bar is there
@@ -572,6 +577,11 @@ Func BuyEquipment()
 	EndIf
 	Local $aLocation
 	While 1
+		If _IsPaused() Then
+			WriteInLogs("BuyEquipment interrupted by Pause")
+			Return
+		EndIf
+
 		;Check if there is any green buy boxes
 		$aLocation = PixelSearch(1160, 590, 1160, 170, 0x11AA23, 10, 1)
 		If @error Then
@@ -608,6 +618,11 @@ Func BuyUpgrade()
 	Local $bSomethingBought = False
 	Local $iY = 170
 	While 1
+		If _IsPaused() Then
+			WriteInLogs("BuyUpgrade interrupted by Pause")
+			Return
+		EndIf
+
 		; Check if RandomBox Magnet is next upgrade
 		PixelSearch(882, $iY, 909, $iY + 72, 0xF4B41B, 1)
 		If Not @error Then

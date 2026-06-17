@@ -26,9 +26,14 @@ Func AscendingHeightsPlay()
 
 	Local $iLastCheckTime = TimerInit()
 	Local $iStartTime = TimerInit() ; Timer for 4-minute timeout
-	
+
 	While True
-		; Check for 4-minute timeout 
+		If _IsPaused() Then
+			WriteInLogs("Ascending Heights interrupted by Pause")
+			ExitLoop
+		EndIf
+
+		; Check for 4-minute timeout
 		If TimerDiff($iStartTime) >= 240000 Then
 			WriteInLogs("Ascending Heights timed out after 4 minutes")
 			; Press 'a' for 3 seconds
@@ -38,7 +43,7 @@ Func AscendingHeightsPlay()
 			cSend(3000, 0, "d")
 			ExitLoop
 		EndIf
-		
+
 		If TimerDiff($iLastCheckTime) >= 5000 Then
 			$iLastCheckTime = TimerInit()
 
@@ -115,7 +120,7 @@ Func searchAllPlatformBellowPlayer($iPlayerX, $iPlayerY, $bSame)
 		While True
 			$iLoopCounter += 1
 			If $iLoopCounter > 1000 Then Return False ; Exit if too many iterations
-			
+
 			PixelSearch($aPosPlatform[0] + 6, $aPosPlatform[1], $aPosPlatform[0] + 6, $aPosPlatform[1], 0x8B9BB4, 1)
 			If @error Then Return $aPosPlatform
 			If $aPosPlatform[1] + 2 > 752 Then Return False

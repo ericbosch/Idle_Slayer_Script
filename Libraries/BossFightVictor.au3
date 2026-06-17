@@ -65,6 +65,12 @@ Func BossBattleVictor()
 
 			$hTime = TimerInit()
 		EndIf
+
+		If _IsPaused() Then
+			AdlibUnRegister("Shoot")
+			WriteInLogs("Victor Fight interrupted by Pause")
+			ExitLoop
+		EndIf
 	WEnd
 EndFunc   ;==>BossBattleVictor
 
