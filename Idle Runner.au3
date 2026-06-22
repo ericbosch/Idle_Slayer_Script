@@ -133,11 +133,11 @@ Func Main()
 
 		If (1800000 < TimerDiff($iTimerFocusGame)) Then
 			$iTimerFocusGame = TimerInit()
-			WinActive("Idle Slayer")
+			WinActivate("Idle Slayer")
 			ControlFocus("Idle Slayer", "", "")
 		EndIf
 
-		
+
 
 		; Silver box collect
 		PixelSearch(650, 36, 650, 36, 0xB88A00, 1)
@@ -326,7 +326,7 @@ Func Rage()
 		BuyTempItem("0x526629")
 		$bBiDimensionalState = False
 		If Not @Compiled Then
-			GUICtrlSetImage($iCheckBoxbDimensionalState, 'Resources\CheckboxUnchecked.jpg')
+			GUICtrlSetImage($iCheckBoxbBiDimensionalState, 'Resources\CheckboxUnchecked.jpg')
 		Else
 			_Resource_SetToCtrlID($iCheckBoxbBiDimensionalState, 'UNCHECKED')
 		EndIf
@@ -757,8 +757,8 @@ Func ClaimQuests()
 	Sleep(50)
 
 
-	; daily Quest 
-	Sleep(500) 
+	; daily Quest
+	Sleep(500)
 	PixelSearch(1073, 174, 1073, 174, 0x379D37, 1)
 	If Not @error Then
 		;Click on +2 daily Quest
@@ -884,7 +884,7 @@ Func RestartIdleSlayerGame($WindowTitle)
 			Return ; Exit function, do not continue
 		EndIf
 
-		; If we are here, X hours have passed. 
+		; If we are here, X hours have passed.
 		; RESET the timer immediately for the next cycle.
 		$iTimerRestartGame = TimerInit()
 
