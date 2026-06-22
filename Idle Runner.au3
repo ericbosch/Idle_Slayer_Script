@@ -440,6 +440,7 @@ Func CollectMinion()
 EndFunc   ;==>CollectMinion
 
 Func CirclePortals()
+	WriteInLogs("CirclePortals: start")
 	;Check if portal button is visible
 	Local $iPortalVisible = 0
 	PixelSearch(1180, 166, 1180, 166, 0x830399, 1)
@@ -455,90 +456,157 @@ Func CirclePortals()
 		Return
 	EndIf
 
-	;Check if timer is up
-	PixelSearch(1154, 144, 1210, 155, 0xFFFFFF, 9, 1)
+	; Purple crystal icon top-right = portal on cooldown, skip
+	PixelSearch(1090, 80, 1150, 135, 0x8800BB, 40)
+	If Not @error Then Return
+	;Check if timer is up (legacy fallback — white timer text)
+	PixelSearch(1154, 100, 1220, 160, 0xFFFFFF, 9, 1)
 	If @error Then
 		SyncProcess(False)
 		;Click portal button
 		MouseClick("left", 1180, 150, 1, 0)
+		WriteInLogs("CirclePortals: cicling")
+		Sleep(500)
+		; If cooldown dialog appeared ("Proceed? Reset Cooldown"), cancel it and bail out
+		PixelSearch(450, 140, 840, 650, 0xF07820, 5)
+		If Not @error Then
+			WriteInLogs("CirclePortals: cooldown dialog detected, cancelling")
+			MouseClick("left", 720, 585, 1, 0)
+			SyncProcess(True)
+			Return
+		EndIf
 		Sleep(300)
 
 		;Select destination
-		;Top of scrollbar
-		MouseMove(867, 300, 0)
-		Sleep(200)
+		;Scroll to top - current world card is always first (darkened)
+		WriteInLogs("CirclePortals: Scroll to top - current world card is always first (darkened)")
+
+		MouseMove(866, 248, 0)
 		Do
 			MouseWheel($MOUSE_WHEEL_UP, 20)
 			;Top of searchbar
-			PixelSearch(875, 250, 875, 250, 0xD6D6D6, 1)
+			PixelSearch(1254, 167, 1254, 167, 0xD6D6D6, 1)
 		Until @error
 		Sleep(400)
 
-		Local $sColor = 0x00CBF8
-		Switch $iCirclePortalsCount
-			Case 1
-				;hills
-				$sColor = 0x00CBF8
-			Case 2
-				;hot desert
-				$sColor = 0xC5464B
-			Case 3
-				;jungle
-				$sColor = 0x009D93
-			Case 4
-				;frozen fields
-				$sColor = 0x6FF5F8
-			Case 5
-				;funky
-				$sColor = 0xB362C7
-			Case 6
-				;modern city
-				$sColor = 0x000173
-			Case 7
-				;factory
-				$sColor = 0x00F8B5
-			Case 8
-				;valley
-				$sColor = 0xE198BF
-			Case 9
-				;castle
-				$sColor = 0x4F0085
-		EndSwitch
+		; World card colors, indexed 1-9 in our own travel order.
+		; [bright = not current world, dark = current world (~42% brightness per channel)]
+		; Dark values calculated as round(bright_channel * 0.42); jungle dark empirically validated.
+		; These are the 9 non-bonus, non-Village dimensions (confirmed against
+		; the Idle Slayer wiki: Hills, Hot Desert, Jungle, Frozen Fields,
+		; Funky Space, Modern City, Factory, Mystic Valley, Haunted Castle -
+		; "Dungeon" is a sub-zone inside Haunted Castle, not its own portal
+		; destination). The game's own portal cycle order is random each
+		; lap, so there's no real "next world" to query - we deliberately
+		; walk our own fixed order instead, just to guarantee every world
+		; gets visited once per lap. If the game ever adds a genuinely new
+		; world to the portal list, it has no entry here and won't be
+		; detected - see the "could not detect" log line below.
+		Local $aWorlds[10][2] = [ _
+			[0, 0],          _ ; index 0 unused (count is 1-based)
+			[0x00CBF8, 0x005568], _ ; 1 hills
+			[0xC5464B, 0x531D20], _ ; 2 hot desert
+			[0x009D93, 0x0A423E], _ ; 3 jungle
+			[0x6FF5F8, 0x2F6768], _ ; 4 frozen fields
+			[0xB362C7, 0x4B2954], _ ; 5 funky
+			[0x000173, 0x000030], _ ; 6 modern city
+			[0x00F8B5, 0x00684C], _ ; 7 factory
+			[0xE198BF, 0x5F4050], _ ; 8 valley
+			[0x4F0085, 0x210038]  _ ; 9 castle
+		]
+		Local $aWorldNames[10] = ["Unknown", "Hills", "Hot Desert", "Jungle", "Frozen Fields", "Funky", "Modern City", "Factory", "Valley", "Castle"]
+
+		; Detect which world is actually current from its darkened card,
+		; instead of trusting the persisted counter blindly - a manual portal
+		; use, fresh install, or missed cycle would otherwise desync the
+		; counter from the real in-game state. Falls back to the persisted
+		; counter only if no dark card is found (unexpected scroll position,
+		; or a world not in $aWorlds at all).
+		Local $iCurrentWorld = 0
+		For $i = 1 To 9
+			PixelSearch(460, 250, 805, 445, $aWorlds[$i][1], 15)
+			If Not @error Then
+				$iCurrentWorld = $i
+				ExitLoop
+			EndIf
+		Next
+		If $iCurrentWorld == 0 Then
+			WriteInLogs("CirclePortals: could not detect current world (unknown/missing from list), falling back to persisted counter " & $iCirclePortalsCount)
+			$iCurrentWorld = $iCirclePortalsCount
+		EndIf
+
+		Local $iTargetWorld = $iCurrentWorld + 1
+		If $iTargetWorld > 9 Then $iTargetWorld = 1
+
+		WriteInLogs("CirclePortals: current=" & $iCurrentWorld & " (" & $aWorldNames[$iCurrentWorld] & "), target=" & $iTargetWorld & " (" & $aWorldNames[$iTargetWorld] & ")")
+
+		Local $sBrightColor = $aWorlds[$iTargetWorld][0]
+		Local $sDarkColor   = $aWorlds[$iTargetWorld][1]
+
 		Local $aLocation
+		Local $iScrollGuard = 0
+		Local $bTravelStarted = False
 		While 1
 			If _IsPaused() Then
 				WriteInLogs("CirclePortals interrupted by Pause")
+				MouseClick("left", 640, 590, 1, 0)
+				SyncProcess(True)
 				Return
 			EndIf
 
-			$aLocation = PixelSearch(470, 230, 470, 540, $sColor, 10, 1)
+			$iScrollGuard += 1
+			If $iScrollGuard > 60 Then
+				WriteInLogs("CirclePortals: aborted, destination not found after 60 scrolls")
+				; Click the dialog's own "Cancel" button - clicking outside
+				; the modal does not dismiss it.
+				MouseClick("left", 640, 590, 1, 0)
+				ExitLoop
+			EndIf
+
+			; Try bright color first (target is not current world).
+			; Fall back to dark color in case target happens to be current world.
+			$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 10, 1)
 			If @error Then
-				;Check gray scroll bar is there
-				PixelSearch(875, 536, 875, 536, 0xD6D6D6, 1)
-				If @error Then
-					MouseClick("left", 600, 600, 1, 0)
-					ExitLoop
-				EndIf
-				Sleep(100)
-				;Move mouse on ScrollBar
+				$aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 15, 1)
+			EndIf
+
+			If @error Then
 				MouseMove(867, 300, 0)
 				MouseWheel($MOUSE_WHEEL_DOWN, 1)
+				Sleep(150)
 			Else
 				Sleep(300)
 				MouseWheel($MOUSE_WHEEL_DOWN, 1)
 				MouseWheel($MOUSE_WHEEL_DOWN, 1)
-				;Click portal
-				MouseClick("left", $aLocation[0] + 300, $aLocation[1], 1, 0)
+				Sleep(200)
+				; Re-locate after the 2-tick scroll
+				$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 10, 1)
+				If @error Then $aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 15, 1)
+				If @error Then
+					MouseWheel($MOUSE_WHEEL_UP, 2)
+					Sleep(200)
+					$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 10, 1)
+					If @error Then $aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 15, 1)
+				EndIf
+				If Not @error Then
+					WriteInLogs("CirclePortals: clicking target=" & $iTargetWorld & " (" & $aWorldNames[$iTargetWorld] & ") at (" & $aLocation[0] + 300 & "," & $aLocation[1] + 40 & ")")
+					MouseClick("left", $aLocation[0] + 300, $aLocation[1] + 40, 1, 0)
+					$bTravelStarted = True
+				Else
+					WriteInLogs("CirclePortals: destination lost after scroll, skipping cycle")
+					; Click the dialog's own "Cancel" button - clicking outside
+					; the modal does not dismiss it.
+					MouseClick("left", 640, 590, 1, 0)
+				EndIf
 				ExitLoop
 			EndIf
 		WEnd
 
-		$iCirclePortalsCount += 1
-		If $iCirclePortalsCount > 9 Then
-			$iCirclePortalsCount = 1
+		If $bTravelStarted Then
+			$iCirclePortalsCount = $iTargetWorld
+			SaveSettings()
+			WriteInLogs("CirclePortals: travelling to " & $aWorldNames[$iTargetWorld])
 		EndIf
-		SaveSettings()
-		WriteInLogs("CirclePortals")
 		Sleep(10000)
 		SyncProcess(True)
 	EndIf
@@ -565,14 +633,19 @@ Func BuyEquipment()
 	Sleep(50)
 	;Click Max buy
 	MouseClick("left", 1180, 636, 4, 0)
+
+	Local $scrollBarX = 1255
+	Local $scrollBarTopY = 165
+	Local $scrollBarBottomY = 600
+
 	;Check if scrollbar is here if no max buy first item otherwise last item
-	PixelSearch(1257, 340, 1257, 340, 0x11AA23, 1)
+	PixelSearch($scrollBarX, $scrollBarTopY, $scrollBarX, $scrollBarTopY, 0x11AA23, 1)
 	If Not @error Then
 		;buy sword
 		MouseClick("left", 1200, 200, 5, 0)
 	Else
 		;Click Bottom of scroll bar
-		MouseClick("left", 1253, 592, 5, 0)
+		MouseClick("left", $scrollBarX, $scrollBarBottomY, 5, 0)
 		Sleep(200)
 	EndIf
 	Local $aLocation
@@ -616,23 +689,36 @@ Func BuyUpgrade()
 	Until @error
 	Sleep(400)
 	Local $bSomethingBought = False
-	Local $iY = 170
+	Local $iY = 155
+	Local $rowHeight = 95
+	Local $skipCheckXStart = 860
+	Local $skipCheckXEnd = 897
 	While 1
 		If _IsPaused() Then
 			WriteInLogs("BuyUpgrade interrupted by Pause")
 			Return
 		EndIf
 
-		; Check if RandomBox Magnet is next upgrade
-		PixelSearch(882, $iY, 909, $iY + 72, 0xF4B41B, 1)
-		If Not @error Then
-			$iY += 96
-		EndIf
-		; Check if RandomBox Magnet is next upgrade
-		PixelSearch(882, $iY, 909, $iY + 72, 0xE478FF, 1)
-		If Not @error Then
-			$iY += 96
-		EndIf
+		; Skip blacklisted upgrades (Random Box Vertical Magnet 0xF4B41B orange /
+		; Special Random Box Vertical Magnet 0xE478FF lilac). Loop until neither
+		; matches so adjacent blacklisted rows are skipped no matter their order;
+		; window widened 72->95 (full row height) to remove the per-row blind band.
+		Local $bSkipped = True
+		While $bSkipped
+			$bSkipped = False
+			PixelSearch($skipCheckXStart, $iY, $skipCheckXEnd, $iY + $rowHeight, 0xF4B41B, 1)
+			If Not @error Then
+				$iY += $rowHeight
+				$bSkipped = True
+			Else
+				PixelSearch($skipCheckXStart, $iY, $skipCheckXEnd, $iY + $rowHeight, 0xE478FF, 1)
+				If Not @error Then
+					$iY += $rowHeight
+					$bSkipped = True
+				EndIf
+			EndIf
+			If $iY > 560 Then ExitLoop (2) ; ran past the visible list
+		WEnd
 		PixelSearch(1180, $iY + 10, 1180, $iY + 10, 0x11A622, 1)
 		If @error Then
 			PixelSearch(1180, $iY + 10, 1180, $iY + 10, 0x0C7418, 1)
@@ -642,7 +728,7 @@ Func BuyUpgrade()
 		EndIf
 		$bSomethingBought = True
 		; Click green buy
-		MouseClick("left", 1180, $iY, 1, 0)
+		MouseClick("left", 1180, $iY + 10, 1, 0)
 		Sleep(50)
 	WEnd
 	If $bSomethingBought And $iAutoBuyLoopAmount < 6 Then
