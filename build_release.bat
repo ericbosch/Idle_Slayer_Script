@@ -5,7 +5,7 @@ set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
 cd /d "%SCRIPT_DIR%"
 
 set "AU3=Idle Runner.au3"
-set "VERSION=3.5.8.1"
+set "VERSION=3.5.8.2"
 set "RELEASE_DIR=%SCRIPT_DIR%\Release\%VERSION%"
 set "ZIP_NAME=Idle.Runner_%VERSION%.zip"
 
