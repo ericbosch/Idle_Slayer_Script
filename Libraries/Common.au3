@@ -1,6 +1,7 @@
 #include-once
 #include <File.au3>
 #include <WinAPISys.au3>
+#include "PlayerDetection.au3"
 
 Func setSetting()
 	; Enables GUI events

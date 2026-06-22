@@ -1,5 +1,6 @@
 #include-once
 #include <File.au3>
+#include "PlayerDetection.au3"
 #Region LogEx.au3 - #FUNCTION#
 
 ; #FUNCTION# ====================================================================================================================
@@ -15,13 +16,23 @@ Func LoadLog($iLog)
 			$iBS3Section1 = 0, $iBS3Section2 = 0, $iBS3Section3 = 0, $iBS3Section4 = 0, $iBS3Failed = 0, $iBS3FailedSB = 0, $iBS3Retried = 0, $iBS3RetriedSB = 0, _
 			$iBS3Section1SB = 0, $iBS3Section2SB = 0, $iBS3Section3SB = 0, $iBS3Section4SB = 0, $iBonusStage3 = 0, $iBonusStage3SB = 0, _
 			$iMinionsClaimed = 0, $iQuestClaimed = 0, $iSilverboxColl = 0, $iMegaHordeRage = 0, $iMegaHordeRageSoul = 0, $iChesthunt = 0, $iPerfectChestHunt = 0, _
-			$iBossFightVictorWon = 0, $iBossFightVictor = 0, $iBossFightKnightWon = 0, $iBossFightKnight = 0, $iAscendingHeights = 0, $iAscendingHeightsFailed = 0
+			$iBossFightVictorWon = 0, $iBossFightVictor = 0, $iBossFightKnightWon = 0, $iBossFightKnight = 0, $iAscendingHeights = 0, $iAscendingHeightsFailed = 0, $iAscendingHeightsWon = 0
+	Local $aSkinCounts[UBound($aPlayerNames)]
 	Local $hFile = FileOpen("IdleRunnerLogs\Logs.txt", $FO_READ)
 	If $hFile <> -1 Then
 		While 1
 			Local $sLine = FileReadLine($hFile)
 			If @error = -1 Then ExitLoop
 			$sLine = StringTrimLeft($sLine, 22)
+			If StringLeft($sLine, 24) == "Ascending Heights Skin: " Then
+				Local $sSkin = StringTrimLeft($sLine, 24)
+				For $i = 0 To UBound($aPlayerNames) - 1
+					If $aPlayerNames[$i] == $sSkin Then
+						$aSkinCounts[$i] += 1
+						ExitLoop
+					EndIf
+				Next
+			EndIf
 			Switch $sLine
 				Case "Silver Box Collected"
 					$iSilverboxColl += 1
@@ -93,6 +104,8 @@ Func LoadLog($iLog)
 					$iAscendingHeights += 1
 				Case "Ascending Height Failed"
 					$iAscendingHeightsFailed += 1
+				Case "Ascending Height Won"
+					$iAscendingHeightsWon += 1
 				Case "Start of BossFight Victor"
 					$iBossFightVictor += 1
 				Case "Victor Won"
@@ -161,8 +174,15 @@ Func LoadLog($iLog)
 	CustomConsole($iLog, "BS3: Section 3 Complete (Spirit Boost): " & $iBS3Section3SB)
 	CustomConsole($iLog, "BS3: Section 4 Complete (Spirit Boost): " & $iBS3Section4SB)
 	CustomConsole($iLog, "-------------------ASCENDING-HEIGHTS--------------------")
-	CustomConsole($iLog, "Ascending Heights Won : " & $iAscendingHeights - $iAscendingHeightsFailed)
+	CustomConsole($iLog, "Ascending Heights Started : " & $iAscendingHeights)
+	CustomConsole($iLog, "Ascending Heights Won : " & $iAscendingHeightsWon)
 	CustomConsole($iLog, "Ascending Heights Failed : " & $iAscendingHeightsFailed)
+	CustomConsole($iLog, "Ascending Heights Interrupted/Timed Out : " & $iAscendingHeights - $iAscendingHeightsWon - $iAscendingHeightsFailed)
+	For $i = 0 To UBound($aPlayerNames) - 1
+		If $aSkinCounts[$i] > 0 Then
+			CustomConsole($iLog, "Ascending Heights Skin - " & $aPlayerNames[$i] & ": " & $aSkinCounts[$i])
+		EndIf
+	Next
 	CustomConsole($iLog, "----------------------BOSS-FIGHTS-----------------------")
 	CustomConsole($iLog, "Victor Fights Done: " & $iBossFightVictor)
 	CustomConsole($iLog, "Victor Fights Won: " & $iBossFightVictorWon)
@@ -205,7 +225,7 @@ Func LoadDataLog($iLogData)
 	CustomConsole($iLogData, "Ascension Upgrade Protect is mandatory for Bonus Stage 2.")
 	CustomConsole($iLogData, "Ascension Upgrade Board The Platforms is mandatory for")
 	CustomConsole($iLogData, "       Bonus Stage 3.")
-	CustomConsole($iLogData, "Use Anna Default-Skin for Victor and Ascending Heights.")
+	CustomConsole($iLogData, "Use Anna Default-Skin for Victor.")
 	CustomConsole($iLogData, "Run the script as Administrator in Windows 11.")
 	CustomConsole($iLogData, "Disable custom cursor in setting.")
 	CustomConsole($iLogData, "Tip: Hover over the Text-Boxes")

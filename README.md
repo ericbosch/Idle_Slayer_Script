@@ -63,7 +63,7 @@ You have two options:
 
     - Ascension Upgrade ***Leadership Master*** is needed for claiming minions otherwise it will not claim them.
   
-    - Use Anna Default-Skin for Ascending Heights
+    - Ascending Heights supports the known default character skins. Custom skins may still require a new detection color.
 
     ### For Bossfights only:
 
