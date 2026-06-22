@@ -510,7 +510,7 @@ Func CirclePortals()
 			[0x009D93, 0x0A423E], _ ; 3 jungle
 			[0x6FF5F8, 0x326162], _ ; 4 frozen fields
 			[0xB362C7, 0x492C4F], _ ; 5 funky
-			[0x000173, 0x090A34], _ ; 6 modern city
+			[0x000178, 0x090A34], _ ; 6 modern city
 			[0x00F8B5, 0x0A624A], _ ; 7 factory
 			[0xE198BF, 0x5A404E], _ ; 8 valley
 			[0x4F0085, 0x260A39]  _ ; 9 castle
