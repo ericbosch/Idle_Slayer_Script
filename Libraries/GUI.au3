@@ -12,6 +12,7 @@
 #include "ResourcesEx.au3"
 #include "Log.au3"
 #include "AutoThreadV3.au3"
+#include "Updater.au3"
 #include <Inet.au3>
 
 
@@ -33,7 +34,7 @@ Global $bAutoBuyUpgradeState = False, _
 		$bArmoryExcellentState = False, _
 		$bRestartGameState = False
 
-Global $sVersion = "3.5.8.2"
+Global $sVersion = "3.5.9.0"
 Global $iJumpSliderValue = 150, _
 		$iCirclePortalsCount = 7, _
 		$iAutoAscendTimer = 10, _
@@ -572,29 +573,7 @@ Func LoadSettings()
 EndFunc   ;==>LoadSettings
 
 Func EventButtonUpdateClick()
-	Local $dData = InetRead("https://api.github.com/repos/ericbosch/Idle_Slayer_Script/releases/latest", 1)
-	Local $iInetError = @error
-	If $iInetError Then
-		MsgBox($MB_OK, "Error", "Failed to retrieve release information.")
-		Return False
-	EndIf
-
-	Local $sJsonData = BinaryToString($dData)
-	Local $aTagMatches = StringRegExp($sJsonData, '"tag_name"\s*:\s*"([^"]+)"', 1)
-	If @error Or Not IsArray($aTagMatches) Then
-		MsgBox($MB_OK, "Error", "GitHub returned invalid release information.")
-		Return False
-	EndIf
-	Local $sLatestTag = $aTagMatches[0]
-
-	If $sLatestTag = $sVersion Then
-		MsgBox($MB_OK, "Latest Version", "The script is up-to-date.")
-	Else
-		Local $iRes = MsgBox($MB_OKCANCEL, "Update Available", "Go on Github and Download.")
-		If $iRes == $IDOK Then
-			ShellExecute("https://github.com/ericbosch/Idle_Slayer_Script/releases")
-		EndIf
-	EndIf
+	If _Updater_CheckForUpdate($sVersion) Then Exit
 EndFunc   ;==>EventButtonUpdateClick
 
 Func SyncProcess($bJumpState = True)

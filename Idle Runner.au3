@@ -107,6 +107,7 @@
 
 
 
+If _Updater_HandleCommandLine() Then Exit
 setSetting()
 _AuThread_Startup()
 Main()
@@ -125,6 +126,7 @@ Func Main()
 	; A lot of Global Function are declared in Libraries/GUI
 	_AuThread_StartThread("ShootAndBoost", @AutoItPID)
 	SyncProcess()
+	_Updater_MarkStartupHealthy($sVersion)
 
 	; Infinite Loops
 	While 1
