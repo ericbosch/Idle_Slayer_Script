@@ -5,7 +5,7 @@ set "SCRIPT_DIR=%SCRIPT_DIR:~0,-1%"
 cd /d "%SCRIPT_DIR%"
 
 set "AU3=Idle Runner.au3"
-set "VERSION=3.5.7.1"
+set "VERSION=3.5.8.1"
 set "RELEASE_DIR=%SCRIPT_DIR%\Release\%VERSION%"
 set "ZIP_NAME=Idle.Runner_%VERSION%.zip"
 
@@ -65,6 +65,7 @@ if not exist "%RELEASE_DIR%\%EXE32%" if not exist "%RELEASE_DIR%\%EXE64%" (
 
 copy /y "%SCRIPT_DIR%\README.md" "%RELEASE_DIR%\" >nul 2>nul
 copy /y "%SCRIPT_DIR%\LICENSE.md" "%RELEASE_DIR%\" >nul 2>nul
+if exist "%SCRIPT_DIR%\RELEASE_NOTES_%VERSION%.md" copy /y "%SCRIPT_DIR%\RELEASE_NOTES_%VERSION%.md" "%RELEASE_DIR%\RELEASE_NOTES.md" >nul
 echo.
 
 :: Create zip (PowerShell available on Windows)
