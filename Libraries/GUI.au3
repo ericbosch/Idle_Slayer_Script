@@ -573,19 +573,24 @@ EndFunc   ;==>LoadSettings
 
 Func EventButtonUpdateClick()
 	Local $dData = InetRead("https://api.github.com/repos/ericbosch/Idle_Slayer_Script/releases/latest", 1)
-	$sJsonData = BinaryToString($dData)
-	If @error Then
+	Local $iInetError = @error
+	If $iInetError Then
 		MsgBox($MB_OK, "Error", "Failed to retrieve release information.")
 		Return False
 	EndIf
 
-	Local $iTagIndex = StringInStr($sJsonData, '"tag_name"') + StringLen('"tag_name"') + 2
-	Local $sLatestTag = StringMid($sJsonData, $iTagIndex, 5)
+	Local $sJsonData = BinaryToString($dData)
+	Local $aTagMatches = StringRegExp($sJsonData, '"tag_name"\s*:\s*"([^"]+)"', 1)
+	If @error Or Not IsArray($aTagMatches) Then
+		MsgBox($MB_OK, "Error", "GitHub returned invalid release information.")
+		Return False
+	EndIf
+	Local $sLatestTag = $aTagMatches[0]
 
 	If $sLatestTag = $sVersion Then
 		MsgBox($MB_OK, "Latest Version", "The script is up-to-date.")
 	Else
-		$iRes = MsgBox($MB_OKCANCEL, "Update Available", "Go on Github and Download.")
+		Local $iRes = MsgBox($MB_OKCANCEL, "Update Available", "Go on Github and Download.")
 		If $iRes == $IDOK Then
 			ShellExecute("https://github.com/ericbosch/Idle_Slayer_Script/releases")
 		EndIf
