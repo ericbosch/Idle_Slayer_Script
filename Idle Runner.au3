@@ -491,7 +491,8 @@ Func CirclePortals()
 
 		; World card colors, indexed 1-9 in our own travel order.
 		; [bright = not current world, dark = current world (~42% brightness per channel)]
-		; Dark values calculated as round(bright_channel * 0.42); jungle dark empirically validated.
+		; Dark values use the game's gray overlay; measured values are preferred,
+		; with remaining values derived from dark = 0.355 * bright + 9.8.
 		; These are the 9 non-bonus, non-Village dimensions (confirmed against
 		; the Idle Slayer wiki: Hills, Hot Desert, Jungle, Frozen Fields,
 		; Funky Space, Modern City, Factory, Mystic Valley, Haunted Castle -
@@ -504,35 +505,37 @@ Func CirclePortals()
 		; detected - see the "could not detect" log line below.
 		Local $aWorlds[10][2] = [ _
 			[0, 0],          _ ; index 0 unused (count is 1-based)
-			[0x00CBF8, 0x005568], _ ; 1 hills
-			[0xC5464B, 0x531D20], _ ; 2 hot desert
+			[0x00CBF8, 0x0A5262], _ ; 1 hills
+			[0xC5464B, 0x502324], _ ; 2 hot desert
 			[0x009D93, 0x0A423E], _ ; 3 jungle
-			[0x6FF5F8, 0x2F6768], _ ; 4 frozen fields
-			[0xB362C7, 0x4B2954], _ ; 5 funky
-			[0x000173, 0x000030], _ ; 6 modern city
-			[0x00F8B5, 0x00684C], _ ; 7 factory
-			[0xE198BF, 0x5F4050], _ ; 8 valley
-			[0x4F0085, 0x210038]  _ ; 9 castle
+			[0x6FF5F8, 0x326162], _ ; 4 frozen fields
+			[0xB362C7, 0x492C4F], _ ; 5 funky
+			[0x000173, 0x090A34], _ ; 6 modern city
+			[0x00F8B5, 0x0A624A], _ ; 7 factory
+			[0xE198BF, 0x5A404E], _ ; 8 valley
+			[0x4F0085, 0x260A39]  _ ; 9 castle
 		]
 		Local $aWorldNames[10] = ["Unknown", "Hills", "Hot Desert", "Jungle", "Frozen Fields", "Funky", "Modern City", "Factory", "Valley", "Castle"]
 
-		; Detect which world is actually current from its darkened card,
-		; instead of trusting the persisted counter blindly - a manual portal
-		; use, fresh install, or missed cycle would otherwise desync the
-		; counter from the real in-game state. Falls back to the persisted
-		; counter only if no dark card is found (unexpected scroll position,
-		; or a world not in $aWorlds at all).
+		; Detect the current world from the dark color strip at x=470.
+		; Searching the full card also matches incidental colors in its artwork.
+		; Require exactly one match so an uncertain result cannot send the
+		; player to the wrong destination.
 		Local $iCurrentWorld = 0
+		Local $iCurrentWorldMatches = 0
 		For $i = 1 To 9
-			PixelSearch(460, 250, 805, 445, $aWorlds[$i][1], 15)
+			Local $aCurrentWorldLocation = PixelSearch(470, 250, 470, 445, $aWorlds[$i][1], 1, 1)
 			If Not @error Then
+				$iCurrentWorldMatches += 1
 				$iCurrentWorld = $i
-				ExitLoop
+				WriteInLogs("CirclePortals: current-world candidate=" & $aWorldNames[$i] & " color=" & Hex($aWorlds[$i][1], 6) & " at (" & $aCurrentWorldLocation[0] & "," & $aCurrentWorldLocation[1] & ")")
 			EndIf
 		Next
-		If $iCurrentWorld == 0 Then
-			WriteInLogs("CirclePortals: could not detect current world (unknown/missing from list), falling back to persisted counter " & $iCirclePortalsCount)
-			$iCurrentWorld = $iCirclePortalsCount
+		If $iCurrentWorldMatches <> 1 Then
+			WriteInLogs("CirclePortals: current world detection rejected, matches=" & $iCurrentWorldMatches & "; cancelling cycle")
+			MouseClick("left", 640, 590, 1, 0)
+			SyncProcess(True)
+			Return
 		EndIf
 
 		Local $iTargetWorld = $iCurrentWorld + 1
@@ -565,9 +568,9 @@ Func CirclePortals()
 
 			; Try bright color first (target is not current world).
 			; Fall back to dark color in case target happens to be current world.
-			$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 10, 1)
+			$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 0, 1)
 			If @error Then
-				$aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 15, 1)
+				$aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 1, 1)
 			EndIf
 
 			If @error Then
@@ -580,13 +583,13 @@ Func CirclePortals()
 				MouseWheel($MOUSE_WHEEL_DOWN, 1)
 				Sleep(200)
 				; Re-locate after the 2-tick scroll
-				$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 10, 1)
-				If @error Then $aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 15, 1)
+				$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 0, 1)
+				If @error Then $aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 1, 1)
 				If @error Then
 					MouseWheel($MOUSE_WHEEL_UP, 2)
 					Sleep(200)
-					$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 10, 1)
-					If @error Then $aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 15, 1)
+					$aLocation = PixelSearch(470, 230, 470, 540, $sBrightColor, 0, 1)
+					If @error Then $aLocation = PixelSearch(470, 230, 470, 540, $sDarkColor, 1, 1)
 				EndIf
 				If Not @error Then
 					WriteInLogs("CirclePortals: clicking target=" & $iTargetWorld & " (" & $aWorldNames[$iTargetWorld] & ") at (" & $aLocation[0] + 300 & "," & $aLocation[1] + 40 & ")")
