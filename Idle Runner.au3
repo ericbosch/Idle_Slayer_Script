@@ -618,6 +618,12 @@ Func CirclePortals()
 EndFunc   ;==>CirclePortals
 
 Func AutoUpgrade()
+	; Debounce: AutoUpgrade can be triggered both by its own timer and from
+	; inside AutoAscend() in the same Main loop pass. Without this guard the
+	; second call races the UI state left by the first (shop tab/scroll not
+	; where it assumes), causing mis-clicks like hitting "Buy all available".
+	If TimerDiff($iTimerLastAutoUpgrade) < 3000 Then Return
+	$iTimerLastAutoUpgrade = TimerInit()
 	WriteInLogs("AutoUpgrade Active")
 	;Close Shop window if open
 	MouseClick("left", 1244, 712, 1, 0)
@@ -636,6 +642,18 @@ Func BuyEquipment()
 	;Click on armor tab
 	MouseClick("left", 850, 690, 1, 0)
 	Sleep(50)
+	; Wait for the Armor tab to actually render before clicking Max buy.
+	; If the previous tab (Upgrades) is still on screen, (1180,636) lands on
+	; its grey "Buy all available" bar (0xA8A8A8) instead of the Armor tab's
+	; white "Max" button (0xFFFFFF) - same coordinate, different tab content.
+	Local $iWaitTries = 0
+	Do
+		PixelSearch(1180, 636, 1180, 636, 0xFFFFFF, 5)
+		If Not @error Then ExitLoop
+		MouseClick("left", 850, 690, 1, 0)
+		Sleep(50)
+		$iWaitTries += 1
+	Until $iWaitTries >= 10
 	;Click Max buy
 	MouseClick("left", 1180, 636, 4, 0)
 

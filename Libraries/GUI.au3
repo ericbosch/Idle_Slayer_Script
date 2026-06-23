@@ -43,6 +43,7 @@ Global $iJumpSliderValue = 150, _
 		$iAutoBuyLoopAmount = 0, _
 		$iTimerAutoBuy = TimerInit(), _
 		$iTimerAutoAscend = TimerInit(), _
+		$iTimerLastAutoUpgrade = 0, _
 		$iTimerFocusGame = TimerInit(), _
 		$iLastCheckTimeLoop = TimerInit(), _
 		$iTimerRestartGame = TimerInit(), _
